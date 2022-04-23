@@ -1,0 +1,10 @@
+{{ partial "header.html" . }}
+
+<a href="/">Ritorna indietro</a>
+
+<h1>{{.Title}}</h1>
+<p class="details">Pubblicato il {{.Date | time.Format ":date_short" }} da {{.Params.author}} – {{.WordCount}} parole</p>
+
+{{.Content}}
+
+{{ partial "footer.html" . }}

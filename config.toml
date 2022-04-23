@@ -1,0 +1,27 @@
+baseURL = 'http://seekbytes.github.io/oslab/'
+languageCode = 'it-it'
+title = "OSLAB"
+theme = "oslab"
+disableKinds = ["taxonomy", "term"]
+
+[outputs]
+    home = ["HTML", "JSON"]
+
+[markup]
+  defaultMarkdownHandler = "goldmark"
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[markup.tableOfContents]
+    endLevel = 4
+    startLevel = 2
+
+[markup.highlight]
+  codeFences = true
+  hl_Lines = ''
+  lineAnchors = ''
+  lineNumbersInTable = true
+  style = 'borland'
+  tabWidth = 4
+  noClasses = false

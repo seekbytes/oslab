@@ -1,0 +1,13 @@
+{{ partial "header.html" . }}
+
+<h1>Tutte le lezioni</h1>
+<p>Qui elencate vi sono tutte le lezioni di laboratorio.</p>
+
+{{ range .Pages.ByDate }}
+	<a href="{{.Permalink}}"><h2>{{.Title}}</h2></a>
+	<div class="summary">
+		{{ .Params.description }} <a href="{{.Permalink}}">Leggi di più</a>
+	</div>
+{{ end }}
+
+{{ partial "footer.html" .}}

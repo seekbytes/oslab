@@ -1,0 +1,12 @@
+[
+  {{- with $.Site.GetPage "/" }}
+    {{- range $index, $data := .Pages }}
+    {{- if $index }},{{ end }}
+    {
+      "title": "{{ $data.Title  }}",
+      "url": "{{ $data.RelPermalink }}",
+      "syscall": "{{ $data.Params.Syscall }}"
+    }
+    {{- end }}
+  {{- end }}
+]

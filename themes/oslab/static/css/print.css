@@ -1,0 +1,20 @@
+@media print{
+	footer, nav, summary, hr, .navbar-lat{
+		display: none;
+	}
+
+	*{
+		margin: 0px;
+		padding: 0px;
+	}
+
+	.definition{
+		background: none;
+		color: black;
+	}
+
+	h2{
+		text-align: center;
+	}
+
+}

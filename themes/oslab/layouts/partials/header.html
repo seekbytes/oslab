@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="it">
+	<head>
+		<meta charset="utf-8">
+		<meta name="author" content="SeekBytes">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{{.Title}}</title>
+		<link href="/css/style.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="/css/syntax.css">
+		<link href="/css/print.css" rel="stylesheet" media="print">
+		{{ if .Params.description }}
+			<meta name="description" content="{{.Params.description}}">
+		{{ end }}
+	</head>
+	<body class="flex">
+		<div class="navbar-lat">
+			<div class="links">
+				{{ if .IsPage }}
+					<h2>Indice</h2>
+					{{.TableOfContents}}
+				{{ end }}
+
+				<h3>Contenuti</h3>
+				<ul>
+				{{ range where $.Site.RegularPages.ByDate "Section" "lezioni"}}
+					<li><a href="{{.Permalink}}">{{.Title}}</a></li>
+				{{ end }}
+				</ul>
+				<a href="../">Sezione principale</a>
+			</div>
+		</div>
+		<!-- menù laterale -->
+		<div class="content">

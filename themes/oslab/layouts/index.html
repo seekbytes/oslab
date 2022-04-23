@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="it">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="utf-8">
+		<title>{{.Title}}</title>
+		<meta name="author" content="SeekBytes">
+		<link href="/css/style.css" rel="stylesheet">
+		<link href="/css/print.css" rel="stylesheet" media="print">
+	</head>
+	<body>
+		<div class="container">
+			<h1>{{.Title}}</h1>
+			{{.Content}}
+			<h2>Lezioni</h2>
+			<ul>
+				{{ range where .Site.Pages.ByDate "Section" "lezioni"}}
+					<li><a href="{{.Permalink}}">{{.Title}}</a></li>
+				{{ end }}
+			</ul>
+			
+			<h2>Cerca la system call</h2>
+			<input class="input" id="searchInput" type="text" placeholder="Scrivi la syscall da cercare">
+			<ul id="searchResult">
+	  			<!-- i risultati di ricerca appaiono qui -->
+			</ul>
+			<footer>
+				<p>Contenuto basato sulle slide del corso di Sistemi Operativi A.A Laboratorio 2021-2022 UniVR.</p>
+			</footer>
+		</div>
+	</body>
+	<script src="/js/search.js"></script>
+</html>
