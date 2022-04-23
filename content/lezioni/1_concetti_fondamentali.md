@@ -62,7 +62,7 @@ Puoi vedere le dimensioni dei segmenti tramite il comando `size`.
 
 {{<highlight c>}}
 int main (int argc, char \*argv[]) {
-	char \*string = "ciao";
+	char *string = "ciao";
 	string[0] = ‘C‘;
 	printf("%s\n", string);
 	return 0;
@@ -77,10 +77,10 @@ Perché ho un segmentation error nel primo esempio? Perché alla riga XX sto ten
 
 {{<highlight c>}}
 int main (int argc, char *argv[]) {
-char string[] = "ciao";
-string[0] = ‘C‘;
-printf("%s\n", string);
-return 0;
+	char string[] = "ciao";
+	string[0] = ‘C‘;
+	printf("%s\n", string);
+	return 0;
 }
 {{</highlight>}}
 
@@ -125,9 +125,9 @@ Per convenzione, il numero negativo -1 o il puntatore `NULL` indica un errore al
 
 ## Gestire gli errori
 
-La sezione ERRORS nelle pagine del manuale di ogni system call documenta il possibile valore di ritorno indicante un errore. Abitualmente, una system call notifica un errore ritornando -1 come risultato.
+La sezione `ERRORS` nelle pagine del manuale di ogni system call documenta il possibile valore di ritorno indicante un errore. Abitualmente, una system call notifica un errore ritornando -1 come risultato.
 
-Quando una system call fallisce, la variabile globale intera errno è impostata ad un valore positivo che identifica l'errore avvenuto. Includere il file header <errno.h> fornisce una dichiarazione di errno, così come un insieme di costanti per i vari numeri di errore.
+Quando una system call fallisce, la variabile globale intera errno è impostata ad un valore positivo che identifica l'errore avvenuto. Includere il file header `<errno.h>` fornisce una dichiarazione di errno, così come un insieme di costanti per i vari numeri di errore.
 
 {{<summary title="Utilizzo di ErrNO">}}
 {{<highlight c>}} 
@@ -146,7 +146,7 @@ if (fd == -1) {
 {{</highlight>}}
 {{</summary>}}
 
-Alcune system call (ad esempio `getpriority`) possono ritornare -1 se hanno successo. Per determinare se un errore accade veramente in questi casi, dobbiamo impostare la variabile errno a 0 prima di chiamare qualsiasi system call. Se l'invocazione ritorna -1 e errno non è zero, allora è accaduto un errore.
+Alcune system call (ad esempio `getpriority`) possono ritornare -1 se hanno successo. Per determinare se un errore accade veramente in questi casi, dobbiamo impostare la variabile `errno` a 0 prima di chiamare qualsiasi system call. Se l'invocazione ritorna -1 e `errno` non è zero, allora è accaduto un errore.
 
 {{<summary title="Esempio con getpriority">}}
 {{<highlight c>}}
@@ -184,13 +184,12 @@ if (fd == -1) { perror("<Open>");
 {{</highlight>}}
 
 Output di esempio:
-
-    <Open>: No such file or directory
+`<Open>: No such file or directory`
 {{</summary>}}
 
 ### strerror
 
-La funzione strerror() ritorna la stringa di errore corrispondente al numero di errore errnum passato come parametro.
+La funzione `strerror()` ritorna la stringa di errore corrispondente al numero di errore errnum passato come parametro.
 
 {{<highlight c>}}
 #include <string.h>

@@ -1,5 +1,5 @@
-baseURL = 'http://seekbytes.github.io/oslab/'
-languageCode = 'it-it'
+baseURL = "https://seekbytes.github.io/oslab/"
+languageCode = "it"
 title = "OSLAB"
 theme = "oslab"
 disableKinds = ["taxonomy", "term"]

@@ -27,14 +27,14 @@ Roadmap:
 	* Processi (fork, exec, wait) Linux
 	* Introduzione a MentOS & MentOS Scheduling
 	* Inter-process communication (IPC) Semafori
-* II o Semestre:
+* II° Semestre:
 	* Inter-process communication (IPC) Signal, Pipe, FiFo
 	* Inter-process communication (IPC) Messaggi, Code
 	* Inter-process communication (IPC) Shared Memory
 	* MentOS memory Management
 	* Esami :) :( :/ 
 
-La roadmap potrebbe essere soggetta a variazioni
+La roadmap potrebbe essere soggetta a variazioni.
 
 ## Strumenti necessari
 
@@ -55,11 +55,11 @@ DISPONIBILE SOLO PER IL PRIMO APPELLO ESTIVO.
 Gli esami orali si terranno tra fine Giugno ed inizio Luglio (in genere tutti i
 giorni per 2 settimane). Le date verranno comunicate nel secondo semestre.
 
-Modalità progetto, note:
+Note riguardo la modalità progetto:
 * La consegna del progetto abilita lo studente a sostenere l’esame orale.
 * L'esame orale non è una “chiacchierata” con il docente sul progetto (“ho consegnato il progetto, quindi _l’esame è superato_”) Durante l’esame orale, lo studente viene interrogato sugli aspetti implementativi dei progetti (a cosa serve questa system call? cosa succede se fallisce? etc.) e sugli argomenti trattati a lezione/laboratorio. 
 * Durante l’esame orale lo studente può utilizzare slide e il terminale (comando man).
-* Possibilità di creare Gruppi (1-3 Persone).
+* Possibilità di creare gruppi (1-3 Persone).
 
 Il docente valuta: quanto lo studente ha appreso durante il corso, e quanto è in grado di “cavarsela”. Modifiche al progetto sarano sicuramente richieste durante l’esame.
 

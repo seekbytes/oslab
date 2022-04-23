@@ -45,7 +45,7 @@ shmid = shmget(key, size, IPC_CREAT | S_IRUSR | S_IWUSR);
 shmid = shmget(key, size, IPC_CREAT | IPC_EXCL | S_IRUSR | S_IWUSR);
 {{</summary>}}
 
-### Attaccare un segmento
+### Attaccare un segmento (shmat)
 
 La chiamata di sistema shmat attacca il segmento di memoria condivisa identificato da shmid allo spazio degli indirizzi virtuali del processo chiamante. 
 
@@ -74,20 +74,22 @@ Un processo figlio eredita i segmenti di memoria condivisa del suo genitore. La 
 int *ptr_1 = (int *)shmat(shmid, NULL, 0);
 // attach the shared memory in read only mode
 int *ptr_2 = (int *)shmat(shmid, NULL, SHM_RDONLY);
+
 // N.B. ptr_1 and ptr_2 are different!
 // But they refer to the same shared memory!
 // write 10 integers to shared memory segment
 for (int i = 0; i < 10; ++i)
-ptr_1[i] = i;
+	ptr_1[i] = i;
+
 // read 10 integers from shared memory segment
 for (int i = 0; i < 10; ++i)
-printf("integer: %d\n", ptr_2[i]);
+	printf("integer: %d\n", ptr_2[i]);
 {{</highlight>}}
 
 Che cosa stamperà il programma? Possiamo utilizzare `ptr_2` per scrivere sul segmento della memoria? (Spoiler: no).
 {{</summary>}}
 
-### Shmdt
+### Staccare il segmento (shmdt)
 
 Quando un processo non ha più bisogno di accedere ad un segmento di memoria condivisa, può chiamare shmdt per staccare il segmento dal suo spazio di indirizzo virtuale. L'argomento shmaddr identifica il segmento da staccare, ed è un valore restituito da una precedente chiamata a shmat.
 
