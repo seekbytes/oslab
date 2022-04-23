@@ -1,0 +1,43 @@
+write       System call per scrivere in un file
+read        System call per leggere in un file
+strerror    Dall'errore alla stringa
+errexit     Funzione custom per gestire l'errore
+open        Aprire un file
+lseek       Ottenere la location dell'offset
+close       Chiusura di un file
+unlink      Rimozione di un collegamento
+stat        Ottenere le informazioni riguardo un file
+chmod       Cambiare i permessi di un file
+mkdir       Creare una nuova cartella
+rmdir       Rimuovere una cartella
+opendir     Apertura di una cartella
+closedir    Chiusura di una cartella
+readdir     Lettura di una cartella
+getpid      Ottenere il Process ID
+getuid      Ottenere l'id dell'utente
+getenv      Ottenere una variabile di ambiente
+setenv      Impostare una variabile di ambiente
+unsetenv    Rimuovere una variabile di ambiente
+chdir       Cambiare path di lavoro
+exit        Uscire da un processo
+fork        Creare un processo figlio
+getppid     Ottenere il PID del padre
+wait        Aspettare l'evento di qualcosa o di qualcuno
+exec        Eseguire qualcosa (sostituisce l'immagine in memoria di un processo)
+runqueue    Struttura dati per lo scheduling (coda) MentOS
+roundrobin  Algoritmo di scheduling famoso per il quanto di tempo
+hfs         Algoritmo di scheduling (sigla)
+cfs         Algoritmo di scheduling
+semaforo    Struttura per gestire la sincronizzazione
+monitor     Struttura per gestire la sincronizzazione (senza imprecare)
+ftok        Creare una IPC da un pathname
+sigprocmask Impostare una maschera ad un processo
+sigaddset   Aggiungere un segnale ad un set di segnali
+kill        Mandare un segnale
+sleep       Sospendere l'esecuzione di un processo
+sigkill     Un segnale non gestibile che uccide il processo in modo brutale
+shmget      Creazione di un segmento di memoria condivisa
+IPC         Comunicazione tra processi
+semctl		Controllare un semaforo
+semop		Eseguire un'operazione su un semaforo
+sigint		Segnale di CTRL+C
