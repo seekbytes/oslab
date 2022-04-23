@@ -44,7 +44,7 @@ Come per tutte le chiamate get, la chiave è il primo argomento. È un valore se
 
 Le chiavi IPC di SystemV sono valori interi rappresentati utilizzando il tipo di dati key_t. Le chiamate IPC get traducono una chiave nel corrispondente identificatore intero identificatore IPC. Quindi, come possiamo fornire una chiave unica che ci garantisca di non ottenere accidentalmente l'identificatore di un oggetto IPC esistente usato da qualche altra applicazione?
 
-### IPC PRIVATE
+### IPC_PRIVATE
 
 Quando si crea un nuovo oggetto IPC, la chiave può essere specificata come IPC_PRIVATE.
 In questo modo, si delega il problema di trovare una chiave unica al kernel.
@@ -54,7 +54,7 @@ id = semget(IPC_PRIVATE, 10, S_IRUSR | S_IWUSR);
 ```
 Questa tecnica è particolarmente utile in applicazioni multiprocesso dove il processo padre crea l'oggetto IPC prima di eseguire un fork(), con il risultato che il processo figlio eredita l'identificatore dell'oggetto IPC.
 
-### Ftok()
+### Ftok
 
 La funzione ftok (file to key) converte un pathname e un proj id (cioè identificatore di progetto) in una chiave IPC.
 
@@ -96,11 +96,13 @@ struct ipc_perm {
 };
 {{</highlight>}}
 
+Alcune note:
+
 * I campi uid e gid specificano la proprietà dell'oggetto IPC.
 * I campi cuid e cgid contengono gli ID utente e gruppo del processo che ha creato l'oggetto.
 * Il campo mode contiene la maschera dei permessi per l'oggetto IPC, che sono inizializzati usando i 9 bit inferiori dei flag specificati nella chiamata di sistema get usata per creare l'oggetto.
 
-Alcune note importanti su ipc perm:
+Alcune note importanti su `ipc_perm`:
 * I campi cuid e cgid sono immutabili.
 * Solo i permessi di lettura e scrittura sono significativi per gli oggetti IPC. Il permesso di esecuzione è privo di significato e viene ignorato.
 
@@ -131,20 +133,20 @@ Usando ipcs, possiamo ottenere informazioni sugli oggetti IPC nel sistema. Per i
 {{<highlight bash>}}
 user@localhost[~]$ ipcs
 ------ Message Queues --------
-key msqid owner perms used-bytes messages
-0x1235 26 student 620 12 20
+key		msqid	Owner		perms 	used-bytes 	messages
+0x1235 	26		student 	620 	12 			20
 ------ Shared Memory Segments --------
-key shmid owner perms bytes nattch status
-0x1234 0 professor 600 8192 2
+key		msqid	Owner		perms 	bytes 	messages
+0x1234 	0 		professor 	600 	8192 	2
 ------ Semaphore Arrays --------
-key semid owner perms nsems
-0x1111 102 professor 330 20
+key		semid	Owner		perms 	nsems
+0x1111 	102		professor 	330 	20
 {{</highlight>}}
 {{</summary>}}
 
 ### ipcrm
 
-Usando ipcrm, possiamo rimuovere gli oggetti IPC dal sistema.
+Usando `ipcrm`, possiamo rimuovere gli oggetti IPC dal sistema.
 
 {{<summary title="Rimuovere una coda di messaggi">}}
 ```
@@ -171,7 +173,7 @@ ipcrm -s 102 ( 102 is the identifier of a semaphore array )
 
 ### Creazione e apertura
 
-The semget system call creates a new semaphore set or obtains the identifier of an existing set.
+La chiamata di sistema `semget` crea un nuovo set di semafori o ottiene l'identificatore di un set esistente.
 
 {{<highlight c>}}
 #include <sys/sem.h>
@@ -179,12 +181,12 @@ The semget system call creates a new semaphore set or obtains the identifier of 
 int semget(key_t key, int nsems, int semflg);
 {{</highlight>}}
 
-Gli argomenti chiave sono: una chiave IPC, nsems specifica il numero disemafori in quell'insieme e deve essere maggiore di 0. semflg è una maschera di bit che specifica i permessi (vedi la chiamata di sistema open(...), argomento mode) da essere posti su un nuovo insieme di semafori o controllati su un insieme esistente.
+Gli argomenti chiave sono: una chiave IPC, `nsems` specifica il numero di semafori in quell'insieme e deve essere maggiore di 0. `semflg` è una maschera di bit che specifica i permessi (vedi la chiamata di sistema open(...), argomento mode) da essere posti su un nuovo insieme di semafori o controllati su un insieme esistente.
 
-In aggiunta, i seguenti flag possono essere ORed (|) in semflg:
-* IPC_CREAT: se non esiste un insieme di semafori con la chiave specificata, crea un
+In aggiunta, i seguenti flag possono essere ORed (`|`) in semflg:
+* `IPC_CREAT`: se non esiste un insieme di semafori con la chiave specificata, crea un
 nuovo insieme di semafori.
-* IPC_EXCL: in combinazione con IPC CREAT, fa fallire semget se un set di semafori esiste con la chiave specificata.
+* `IPC_EXCL`: in combinazione con IPC CREAT, fa fallire semget se un set di semafori esiste con la chiave specificata.
 
 {{<summary title="Esempio per creare un insieme di 10 semafori">}}
 int semid;

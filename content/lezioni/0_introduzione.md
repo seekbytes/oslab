@@ -8,16 +8,16 @@ date = 2021-10-29
 
 ## Docenti 
 
-Corso di Sistemi Operativi, Anno Accademico 2021/2022
+Corso di Sistemi Operativi, Anno Accademico 2021/2022 [Docente (nome.cognome@univr.it)]
 
-Docente (nome.cognome@univr.it):
-Laboratorio Teoria (Squadre riunite)
-* Florenc Demrozi - Lunedì (08:30 - 11:30) - Aula Magna CV3
+Laboratorio Teoria (Squadre riunite):
+* [Florenc Demrozi](https://sites.google.com/view/florencdemrozi) - Lunedì (08:30 - 11:30) - Aula Magna CV3
 
 Esercitazioni (Matricole pari):
-* Alberto Castellini - Giovedì (13:30 - 16:30) - Lab. Delta
+* [Alberto Castellini](http://profs.scienze.univr.it/~castellini/) - Giovedì (13:30 - 16:30) - Lab. Delta
+
 Esercitazioni (Matricole dispari):
-* Alberto Castellini - Venerdì (08:30 - 11:30) - Lab. Delta
+* [Alberto Castellini](http://profs.scienze.univr.it/~castellini/) - Venerdì (08:30 - 11:30) - Lab. Delta
 
 ## Roadmap
 

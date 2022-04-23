@@ -8,15 +8,15 @@ author = "SeekBytes"
 
 ## Che cosa è?
 
-MentOS è un sistema operativo open-source utilizzato per scopi didattici. MentOS può essere scaricato dalla repository Github gratuita: github.com/MentOS . L'obiettivo di MentOS è di fornire un ambiente di progetto che sia abbastanza realistico abbastanza realistico da mostrare come funziona un vero sistema operativo, ma abbastanza semplice che gli studenti possano capirlo e modificarlo in modo significativo.
+MentOS è un sistema operativo open-source utilizzato per scopi didattici. MentOS può essere scaricato dalla repository Github gratuita: [github.com/MentOS](https://github.com/mentos/). L'obiettivo di MentOS è di fornire un ambiente progettuale che sia abbastanza realistico da mostrare come funziona un vero sistema operativo, ma, allo stesso tempo, abbastanza semplice che gli studenti possano capirlo e modificarlo in modo significativo.
 
-Ma se ci sono così tanti sistemi operativi, perché hanno scritto MentOS? È vero, ci sono molti sistemi operativi per l'istruzione, MA quanti di loro seguono la linea guida definita da Linux? MentOS mira ad avere le stesse strutture dati e algoritmi di Linux. Esso ha un codice sorgente ben documentato, e puoi compilarlo sul tuo portatile in pochi secondi! Se sei un principiante nello sviluppo di sistemi operativi, forse MentOS è il sistema operativo giusto per iniziare.
+Ma se ci sono così tanti sistemi operativi, perché qualcuno ha scritto MentOS? È vero, ci sono molti sistemi operativi per l'istruzione, MA quanti di loro seguono le linee guida definita da Linux? MentOS mira ad avere le stesse strutture dati e algoritmi di Linux. Ha un codice sorgente ben documentato, e puoi compilarlo sul tuo portatile in pochi secondi! Se sei un principiante nello sviluppo di sistemi operativi, forse MentOS è il sistema operativo giusto per iniziare.
 
 ## Concetti fondamentali
 
 ### Registri CPU
 
-Esistono tre tipi di registri:
+Esistono tre tipi di registri nella CPU:
 
 * registri di general-purpose
 * registri segment
@@ -152,7 +152,10 @@ La voce data viene rimossa dalla lista.
 
 #### List_entry
 
-`list_entry(list_head_t *ptr, struct_type, field_name)`:
+{{<highlight c>}}
+(type *) list_entry(list_head_t *ptr, struct_type, field_name)
+{{</highlight>}}
+
 Restituisce la struct che incorpora una testa di lista. In dettaglio:
 * ptr è un puntatore ad una testa di lista t;
 * type of struct è il nome del tipo della struct che incorpora una list_head_t;

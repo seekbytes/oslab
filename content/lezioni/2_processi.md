@@ -304,9 +304,15 @@ printf("ciao\n");
 Nessuna stringa sarà visualizzata sul terminale, poiché il flusso stdout è chiuso. Tuttavia, tutte le stringhe stampate da printf saranno riportate in myfile.
 {{</summary>}}
 
-### int dup(int oldfd)
+### dup
 
 La chiamata di sistema dup prende un descrittore di file aperto e restituisce un nuovo descrittore che si riferisce alla stessa descrizione del file aperto. Il nuovo descrittore è garantito essere il più basso descrittore di file inutilizzato.
+
+{{<highlight c>}}
+#include <unistd.h>
+// Returns (new) file descriptor on success, or -1 on error.
+int dup(int oldfd);
+{{</highlight>}}
 
 {{<summary title="Esempio con dup">}}
 {{<highlight c>}}
@@ -331,27 +337,47 @@ fprintf(stderr, "day!\n");
 
 ### Terminazione dei processi
 
-#### void \_exit(int status)
+#### \_exit
 
 Il processo che chiama \_exit() viene sempre terminato con successo.
 
+{{<highlight c>}}
+#include <unistd.h>
+
+void _exit(int status);
+{{</highlight>}}
+
 Il primo byte dell'argomento status definisce lo stato di terminazione del processo. Per convenzione, il valore zero indica che il processo si è concluso con successo, un valore di stato non nullo indica che il processo si è concluso senza successo.
 
-#### void exit(int status)
+#### exit
 
 I programmi generalmente chiamano exit() piuttosto che \_exit().
 
-La libreria C definisce le macro EXIT SUCCESS (0) e EXIT FAILURE (1)
-Le seguenti azioni sono eseguite dal metodo exit(): 
-* Chiamare i gestori di uscita (vedere le prossime diapositive).
+{{<highlight c>}}
+#include <stdlib.h> 
+
+// N.B. provided by C library
+void exit(int status);
+{{</highlight>}}
+
+La libreria C definisce le macro `EXIT_SUCCESS` (0) e `EXIT_FAILURE` (1)
+Le seguenti azioni sono eseguite dal metodo `exit`(): 
+* Chiamare i gestori di uscita.
 * Cancellare i buffer del flusso stdio.
-* Chiamare \_exit(), utilizzando il valore fornito in status.
+* Chiamare `_exit()`, utilizzando il valore fornito in status.
 
-Un gestore di uscita è una funzione che viene registrata durante la vita di un processo. Viene chiamata automaticamente durante la terminazione del processo tramite exit().
+Un gestore di uscita è una funzione che viene registrata durante la vita di un processo. Viene chiamata automaticamente durante la terminazione del processo tramite `exit()`.
 
-#### int atexit(void (*func)(void));
+#### atexit
 
 La atexit() aggiunge il puntatore di funzione fornito `func` a una lista di funzioni che sono chiamate durante la terminazione del processo.
+
+{{<highlight c>}}
+#include <stdlib.h>
+
+// Returns 0 on success, or nonzero on error.
+int atexit(void (*func)(void));
+{{</highlight>}}
 
 `func` deve essere definita: non deve prendere argomenti e non deve restituire alcun valore. Se sono registrati più gestori di uscita, allora vengono chiamati nell'ordine inverso di registrazione.
 
@@ -383,9 +409,16 @@ Un altro modo in cui un processo può terminare è il ritorno da main():
 
 ### Creazione dei processi
 
-#### pid_t fork(void)
+#### fork
 
 La chiamata di sistema fork() crea un nuovo processo, il figlio, che è un duplicato quasi esatto del processo chiamante, il genitore.
+
+{{<highlight c>}}
+#include <unistd.h>
+// Processo padre: ritorna il process ID del figlio se la chiamata ha successo, altrimenti -1 in caso di errore.
+// Nel processo figlio creato: ritorna sempre 0.
+pid_t fork(void);
+{{</highlight>}}
 
 Dopo l'esecuzione di una fork(), esistono due processi e, in ogni processo, l'esecuzione continua dal punto in cui la fork() ritorna.
 
@@ -424,14 +457,20 @@ L'output del terminale mostra che:
 * il processo figlio ottiene la propria copia delle variabili del genitore;
 * l'esecuzione di entrambi i processi, genitore e figlio, continua dal punto in cui la fork() è ritornata;
 
-
-#### pid_t getppid(void);
+#### getppid
 
 Ogni processo ha un genitore, cioè il processo che lo ha creato.
 
+{{<highlight c>}}
+#include <unistd.h>
+
+// Always successfully returns PID of caller’s parent.
+pid_t getppid(void);
+{{</highlight>}}
+
 L'antenato di tutti i processi è il processo init (PID=1). Se un processo figlio diventa orfano perché il suo genitore termina, allora il figlio viene "adottato" dal processo init. Le successive chiamate a `getppid()` nel figlio restituiscono 1.
 
-{{<summary title="Esempio codice">}}
+{{<summary title="Esempio codice e PID zombie">}}
 {{<highlight c>}}
 	#include <unistd.h>
 	int main (int argc, char *argv[]) { 
@@ -448,7 +487,6 @@ L'antenato di tutti i processi è il processo init (PID=1). Se un processo figli
 		return 0;
 	}
 {{</highlight>}}
-{{</summary>}}
 
 L'esecuzione dell'esempio precedente ha tre diversi scenari: 
 
@@ -469,16 +507,25 @@ L'esecuzione dell'esempio precedente ha tre diversi scenari:
 (genitore) PID: 402 PPID: 350
 (figlio) PID: 403 PPID: 1
 ```
+{{</summary>}}
+
 
 ### Controllo dei processi figlio
 
-#### pid\_t wait(int *status)
+#### wait
 
 La chiamata di sistema wait attende che uno dei figli del processo chiamante termini. (vedere waitpid per l'argomento di ingresso dello stato).
 
+{{<highlight c>}}
+#include <sys/wait.h>
+
+// Returns PID of terminated child, or -1 on error.
+pid_t wait(int *status)
+{{</highlight>}}
+
 Le seguenti azioni sono eseguite da wait:
-* Se il processo chiamante non ha figli non attesi, allora wait restituisce -1 ed errno è ECHILD.
-* Se nessun figlio è ancora terminato, allora wait blocca il processo chiamante fino a quando un figlio termina. Se un processo figlio è già terminato, allora wait ritorna immediatamente.
+* Se il processo chiamante non ha figli non attesi, allora la wait restituisce -1 ed errno è `ECHILD`.
+* Se nessun figlio è ancora terminato, allora la wait blocca il processo chiamante fino a quando un figlio termina. Se un processo figlio è già terminato, allora la wait ritorna immediatamente.
 * Se status non è NULL, le informazioni sul processo figlio terminato sono memorizzate nella variabile intera a cui punta lo stato.
 
 {{<summary title="Esempio di attesa processo figlio">}}
@@ -518,9 +565,16 @@ Il kernel affronta questa situazione trasformando il processo figlio terminato i
 
 Se il processo padre termina senza chiamare wait, allora il processo figlio zombie viene "adottato" dal processo init, che eseguirà una chiamata di sistema wait qualche tempo dopo.
 
-#### pid_t waitpid(pid_t pid, int \*status, int options);
+#### waitpid
 
 La chiamata di sistema waitpid sospende l'esecuzione del processo chiamante finché un figlio specificato dall'argomento pid non ha cambiato stato. 
+
+{{<highlight c>}}
+#include <sys/wait.h>
+
+// Returns a PID, 0, or -1 on error.
+pid_t waitpid(pid_t pid, int *status, int options);
+{{</highlight>}}
 
 L'argomento status è lo stesso di wait. Il valore del pid determina quale processo figlio vogliamo aspettare.
 

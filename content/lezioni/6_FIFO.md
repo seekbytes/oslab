@@ -204,12 +204,12 @@ La system call open apre una FIFO.
 int open(const char *pathname, int flags);
 {{</highlight>}}
 
-Il parametro pathname specifica la posizione del FIFO nel file system. L'argomento flags è una maschera di bit di una delle seguenti costanti che specificano la modalità di accesso per il FIFO.
+Il parametro `pathname` specifica la posizione del FIFO nel file system. L'argomento `flags` è una maschera di bit di una delle seguenti costanti che specificano la modalità di accesso per il FIFO.
 
 Flag | Descrizione
 -- | --
-O_RDONLY | Apre in sola lettura
-O_WRONLY | Apre in sola scrittura
+`O_RDONLY` | Apre in sola lettura
+`O_WRONLY` | Apre in sola scrittura
 
 L'unico uso sensato di un FIFO è quello di avere un processo di lettura e uno di scrittura su ogni estremità. Per impostazione predefinita, l'apertura di una FIFO per la lettura (flag `O_RDONLY`) blocca finché un altro processo non apre la FIFO per la scrittura (flag `O_WRONLY`). Al contrario, l'apertura del FIFO per la scrittura blocca finché un altro processo apre la FIFO per la lettura. In altre parole, l'apertura di una FIFO sincronizza i processi di lettura e scrittura. Se l'estremità opposta di una FIFO è già aperta (forse perché una coppia di processi ha già aperto ciascuna estremità della FIFO), allora l'apertura ha successo immediatamente.
 

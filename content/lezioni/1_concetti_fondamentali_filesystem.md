@@ -493,13 +493,13 @@ La libreria C definisce le seguenti costanti macro per il valore restituito nel 
 
 Constante | Tipo di file
 -- | --
-DT_BLK | Block device
-DT_CHR | Character device
-DT_DIR | Directory
-DT_FIFO | Named pipe (FIFO)
-DT_LNK | Collegamento
-DT_REG | File normale
-DT_SOCK | Unix socket
+`DT_BLK` | Block device
+`DT_CHR` | Character device
+`DT_DIR` | Directory
+`DT_FIFO` | Named pipe (FIFO)
+`DT_LNK` | Collegamento
+`DT_REG` | File normale
+`DT_SOCK` | Unix socket
 
 {{<summary title="Mostrare i file all'interno di una cartella">}}
 {{<highlight c>}}
