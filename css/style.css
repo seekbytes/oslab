@@ -9,9 +9,8 @@ body{
 @media screen and (max-width: 800px){
 
 	.flex{
-		flex-direction: column;
+		flex-direction: column-reverse;
 	}
-
 
 }
 
