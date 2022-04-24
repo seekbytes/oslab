@@ -32,6 +32,7 @@ struct dirent *readdir(DIR *dirp);
 Ed esempi:
 
 {{<summary title="Esempio">}}
+Questo è un esempio di come la printf viene utilizzata.
 {{<highlight c>}}
 #include <stdio.h>
 
@@ -41,6 +42,10 @@ int main(){
 }
 {{</highlight>}}
 {{</summary>}}
+
+## Informazioni sul sito web
+
+Questo sito web è stato costruito tramite [GoHugo](https://gohugo.io). Il codice per generare queste pagine è disponibile su [Github](https://github.com/seekbytes/oslab).
 
 <!--
 Infine, ultima nota, se il corso di sistemi operativi vi ha "fritto" il cervello, non disperate! Potete sempre provare a rilassarvi con ["Lo Stack da colorare"](/pdf/) e ["Unisci lo Heap"](/pdf/). O il cruciverba delle syscall. -->

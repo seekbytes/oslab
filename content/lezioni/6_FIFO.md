@@ -3,6 +3,7 @@ title = "Lezione 6 - Pipe e FIFO"
 slug = "6-pipe-fifo"
 description = "Utilizzo delle PIPE (introduzione, apertura ed utilizzo) e confronto con FIFO (evoluzione) apertura ed utilizzo."
 author = "SeekBytes"
+syscall = ["pipe", "mkfifo", "open"]
 date = 2022-04-05
 +++
 
@@ -16,7 +17,7 @@ Una PIPE è un flusso di dati in byte che permette a processi di scambiare byte.
 
 * nessun concetto/astrazione di messaggi. Il processo che legge da una PIPE può leggere blocchi di dati di tutti i tipi, non curandosi della dimensione dei blocchi del processo scrivente.
 
-* il tentativo di leggere da una PIPE vuota blocca il lettore finché almeno un byte è stato scritto nella PIPE oppure un segnale viene ricevuto (terminando con EINTR).
+* il tentativo di leggere da una PIPE vuota blocca il lettore finché almeno un byte è stato scritto nella PIPE oppure un segnale viene ricevuto (terminando con `EINTR`).
 
 * Se l'estremità in cui si scrive è chiusa, allora un processo che legge dalla PIPE vedrà un end-of-file quando ha letto tutti i dati sulla PIPE.
 

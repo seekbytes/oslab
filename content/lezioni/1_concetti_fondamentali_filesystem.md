@@ -176,6 +176,7 @@ Per ogni file aperto, il kernel salva un *file offset* che è la posizione da do
 L'argomento fd specifica il file descriptor del file aperto, offset specifica un valore in byte, mentre whence indica il punto di partenza da cui l'offset deve essere interpretato.
 
 {{<summary title="Esempio">}}
+{{<highlight c>}}
 // first byte of the file.
 off_t current = lseek(fd1, 0, SEEK_SET);
 // last byte of the file.
@@ -184,6 +185,7 @@ off_t current = lseek(fd2, -1, SEEK_END);
 off_t current = lseek(fd3, -10, SEEK_CUR);
 // 10th byte after the current offset location of the file.
 off_t current = lseek(fd4, 10, SEEK_CUR);
+{{</highlight>}}
 {{</summary>}}
 
 ### Close

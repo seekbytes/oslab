@@ -143,8 +143,7 @@ struct runqueue {
 }
 {{</highlight>}}
 
-Fate attenzione! `queue` è la testa di una lista circolare, doppiamente collegata, che raccoglie tutti i processi di sistema in stato di esecuzione. Di conseguenza, un campo run_list di tipo struct list_head viene aggiunto nella struct task struct.
-(Vedi le diapositive concetti fondamentali per maggiori dettagli).
+Fate attenzione! `queue` è la list_head_t di una lista circolare, doppiamente collegata, che raccoglie tutti i processi di sistema in stato di esecuzione. Di conseguenza, un campo `run_list` di tipo struct `list_head` viene aggiunto nella struct `task_struct`. (Vedi le diapositive concetti fondamentali per maggiori dettagli).
 
 ### Flusso di esecuzione dello scheduler
 

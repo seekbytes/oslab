@@ -35,16 +35,16 @@ Tipica configurazione dello spazio di RAM di un processo:
 {{<summary title="Esempio">}}
 {{<highlight c>}}
 #include <stdlib.h>
-// Declared global variables
+// Variabili globali dichiarate
 char buffer[10]; // <- (bss)
 int primes [] = {2, 3, 5, 7}; // <- (data)
-// Function implementation
+// Implementazione di una funzione
 void method(int *a) { // <- (stack)
 	int i; // <- (stack)
 	for (i = 0; i < 10; ++i)
 		a[i] = i;
 }
-// Program entry point
+// Entry point del programma
 int main (int argc, char *argv[]) { // <- (stack)
 	static int key = 123; // <- (data)
 	int *p; // <- (stack)
