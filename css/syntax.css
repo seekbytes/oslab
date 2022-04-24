@@ -1,3 +1,7 @@
+/*
+	Syntax.css per fare l'highlight del codice
+*/
+
 /* Background */ .bg { background-color: #ffffff }
 /* PreWrapper */ .chroma { background-color: #ffffff; }
 /* Other */ .chroma .x {  }

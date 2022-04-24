@@ -78,7 +78,7 @@ table, th, td{
 	border: 1px solid black;
 }
 
-td{
+td, th{
 	padding: 10px;
 }
 
