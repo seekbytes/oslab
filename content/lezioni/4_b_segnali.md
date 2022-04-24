@@ -172,6 +172,7 @@ L'argomento pid identifica uno o più processi a cui il segnale specificato da s
 stesso.
 
 {{<summary title="Inviare un segnale SIGKILL ad un processo figlio">}}
+{{<highlight c>}}
 int main (int argc, char *argv[]) {
 	pid_t child = fork();
 	switch(child) {
@@ -185,6 +186,7 @@ int main (int argc, char *argv[]) {
 	}
 	return 0;
 }
+{{</highlight>}}
 {{</summary>}}
 
 ### Alarm
@@ -202,6 +204,7 @@ unsigned int alarm(unsigned int seconds);
 L'argomento seconds specifica il numero di secondi nel futuro in cui il timer deve scadere. In quel momento, un segnale SIGALRM viene consegnato al processo chiamante. L'impostazione di un timer con allarme sovrascrive qualsiasi timer precedentemente impostato.
 
 {{<summary title="Impostare un timer con la syscall alarm">}}
+{{<highlight c>}}
 void sigHandler(int sig) { printf("Out of time!\n"); _exit(0); }
 
 int main (int argc, char *argv[]) {
@@ -217,6 +220,7 @@ int main (int argc, char *argv[]) {
 	printf("%s seconds before timer expirations!\n", time);
 	return 0;
 }
+{{</highlight>}}
 {{</summary>}}
 
 ## Impostare o bloccare un segnale
