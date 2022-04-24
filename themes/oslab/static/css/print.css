@@ -7,7 +7,7 @@
 @media print{
 
 	/* Non mostrare il menù laterale, gli esempi e il footer */
-	footer, nav, summary, hr, .navbar-lat{
+	footer, nav, summary, hr, .navbar-lat, .details, #returnBack{
 		display: none;
 	}
 
@@ -28,9 +28,8 @@
 		page-break-inside: avoid;
 	}
 
-	*{
-		margin: 0px;
-		padding: 0px;
+	table, figure {
+  		page-break-inside: avoid;
 	}
 
 	.definition{
@@ -40,6 +39,10 @@
 
 	h2{
 		text-align: center;
+	}
+
+	li{
+		padding-left: 10px;
 	}
 
 }

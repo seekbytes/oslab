@@ -19,7 +19,7 @@ Troverai dei box del genere che segnalano le definizioni:
 Questa è una definizione di esempio
 {{</definition>}}
 
-Blocchi di codice
+Blocchi di codice:
 
 {{<highlight c>}}
 #include <sys/types.h>
@@ -29,7 +29,7 @@ Blocchi di codice
 struct dirent *readdir(DIR *dirp);
 {{</highlight>}}
 
-Ed esempi
+Ed esempi:
 
 {{<summary title="Esempio">}}
 {{<highlight c>}}
@@ -41,10 +41,6 @@ int main(){
 }
 {{</highlight>}}
 {{</summary>}}
-
-## Informazioni
-
-Questo sito web è stato costruito con la versione Gohugo 
 
 <!--
 Infine, ultima nota, se il corso di sistemi operativi vi ha "fritto" il cervello, non disperate! Potete sempre provare a rilassarvi con ["Lo Stack da colorare"](/pdf/) e ["Unisci lo Heap"](/pdf/). O il cruciverba delle syscall. -->

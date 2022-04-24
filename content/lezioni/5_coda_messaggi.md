@@ -11,7 +11,7 @@ syscall = ["shmget", "shmat", "shmdt", "shmctl", "msgget", "msgsnd", "msgrcv", "
 
 ### Concetti fondamentali
 
-Una memoria condivisa è un segmento di memoria fisica gestito dal Kernel, che permette a due o più processi di scambiarsi dati. Una volta collegata, anche più di una volta, la memoria condivisa fa parte dello spazio di indirizzamento virtuale del processo, e non è richiesto alcun intervento del kernel. I dati scritti in una memoria condivisa sono immediatamente disponibili a tutti gli altri processo che condividono lo stesso segmento. Tipicamente, qualche metodo di sincronizzazione è richiesto in modo che i processi non accedano simultaneamente accedere alla memoria condivisa (per esempio, semafori!).
+Una memoria condivisa è un segmento di memoria fisica gestito dal Kernel, che permette a due o più processi di scambiarsi dati. Una volta collegata, anche più di una volta, la memoria condivisa fa parte dello spazio di indirizzamento virtuale del processo, e non è richiesto alcun intervento del kernel. I dati scritti in una memoria condivisa sono immediatamente disponibili a tutti gli altri processo che condividono lo stesso segmento. Tipicamente, qualche metodo di sincronizzazione è richiesto in modo che i processi non accedano simultaneamente accedere alla memoria condivisa (per esempio, utilizzare i semafori!).
 
 ### Creazione ed apertura (shmget)
 
@@ -35,6 +35,7 @@ uguale alla dimensione del segmento.
 * `IPC_EXCL`: in combinazione con `IPC_CREAT`, fa fallire shmget se un segmento esiste con la chiave specificata.
 
 {{<summary title="Esempio di creazione di un segmento di memoria condiviso">}}
+{{<highlight c>}}
 int shmid;
 ket_t key = //... (generate a key in some way, i.e. with ftok)
 size_t size = //... (compute size value in some way)
@@ -44,6 +45,7 @@ shmid = shmget(IPC_PRIVATE, size, S_IRUSR | S_IWUSR);
 shmid = shmget(key, size, IPC_CREAT | S_IRUSR | S_IWUSR);
 // C) create a shared memory with identifier key, but fail if it exists already
 shmid = shmget(key, size, IPC_CREAT | IPC_EXCL | S_IRUSR | S_IWUSR);
+{{</highlight>}}
 {{</summary>}}
 
 ### Attaccare un segmento (shmat)
@@ -145,7 +147,7 @@ else
 
 #### Operazioni di controllo
 
-Per ogni segmento di memoria condivisa il kernel ha una struttura dati associata s`hmid_ds` della seguente forma:
+Per ogni segmento di memoria condivisa il kernel ha una struttura dati associata `shmid_ds` della seguente forma:
 
 {{<highlight c>}}
 struct shmid_ds {
@@ -297,15 +299,15 @@ Il valore nel campo `msgtype` seleziona il messaggio recuperato come segue:
 * se inferiore a 0, il primo messaggio del tipo m più basso inferiore o uguale al valore assoluto di msgtype viene rimosso e restituito al processo chiamante.
 
 Data la definizione del messaggio: (mtype, char) e la seguente coda:
-{(300,'a'); (100,'b'); (200,'c'); (400,'d'); (100,'e')}
+`{(300,'a'); (100,'b'); (200,'c'); (400,'d'); (100,'e')}`
 Una serie di chiamate msgrcv con msgtype=-300 recupera i messaggi:
-(100,'b'), (100,'e'), (200,'c'), (300,'a')
+`(100,'b'), (100,'e'), (200,'c'), (300,'a')`
 
 L'argomento msgflg è una maschera di bit formata da OR insieme a zero o più dei seguenti flag:
 * `IPC_NOWAIT`: Per impostazione predefinita, se nessun messaggio corrispondente a msgtype è nella coda, msgrcv si blocca fino a quando un tale messaggio diventa disponibile. Specificando il flag `IPC_NOWAIT`, msgrcv ritorna immediatamente con l'errore ENOMSG.
 * `MSG_NOERROR`: Per default, se la dimensione del campo mtext del messaggio supera lo spazio disponibile (come definito dall'argomento msgsz), msgrcv fallisce. Se viene specificato il flag `MSG_NOERROR`, allora msgrcv rimuove invece il messaggio dalla coda, tronca il suo campo mtext a msgsz bytes, e lo restituisce al chiamante.
 
-{{<summary title="Esempio 1">}}
+{{<summary title="Esempio 1: recuperare un messaggio">}}
 {{<highlight c>}}
 // message structure definition
 struct mymsg {
@@ -320,7 +322,7 @@ if (msgrcv(msqid, &m, mSize, 1, 0) == -1)
 {{</highlight>}}
 {{</summary>}}
 
-{{<summary title="Esempio 2">}}
+{{<summary title="Esempio 2: copiare i primi N byte di un messaggio">}}
 {{<highlight c>}}
 // message structure definition
 struct mymsg {
@@ -335,7 +337,7 @@ if (msgrcv(msqid, &m, mSize, 1, MSG_NOERROR) == -1)
 {{</highlight>}}
 {{</summary>}}
 
-{{<summary title="Esempio 3">}}
+{{<summary title="Esempio 3: selezione di un messaggio in base al mtype">}}
 {{<highlight c>}}
 // Message structure
 struct mymsg {

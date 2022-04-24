@@ -1,6 +1,6 @@
 # OSLAB
 
-Documentazione per il corso di Sistemi Operativi parte di Laboratorio tenuto presso l'Università di Verona, anno accademico 2021-2022.
+Documentazione per l'insegnamento di Sistemi Operativi parte di Laboratorio tenuto presso l'Università di Verona, corso di laurea in Informatica, anno accademico 2021-2022.
 
 ## Caratteristiche
 

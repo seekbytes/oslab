@@ -98,7 +98,7 @@ File descriptor | Descrizione | nome POSIX
 1 | standard output | `STDOUT_FILENO`
 2 | standard error | `STDERR_FILENO`
 
-Più dettagli sono contenuto nel capitolo "File system".
+Più dettagli sono contenuti nel capitolo riguardo il ["File system"](/oslab/lezioni/1-b-file-system/).
 
 ## System Call
 
@@ -116,7 +116,7 @@ Dal punto di vista della programmazione, invocare una system calls è molto simi
 
 1. l'applicazione chiama una system call invocando una funzione di "wrapper" nella libreria C
 2. la funzione wrapper: copia gli argomenti della system call dallo stack a registri specifici della CPU e copia il numero di system call nel registro `%eax`. (Ogni system call ha associato un nome dato dalla libreria standard C e un numero univoco) Infine, il wrapper chiama l'interrupt per cambiare modalità da "utente" a "kernel mode" (`int 0x80`)
-3. il kernel esegue la routine per le system call: salva i valori dei registri nello stack del kernel, controlla la validità del numero di sistem call e invoca la "vera" system call (system call service routine)
+3. il kernel esegue la routine per le system call: salva i valori dei registri nello stack del kernel, controlla la validità del numero della system call e invoca la "vera" system call (system call service routine)
 4. La service routine esegue il task richiesto e il risultato è ritornato alla routine
 5. La routine ripristina i valori dei registri dallo stack del kernel e pone il risultato della system call sullo stack. Simultaneamente, la routine cambia modalità da kernel a user mode e ritorna all'esecuzione della funzione wrapper
 6. Se il valore di ritorno della chiamata di sistema indica un errore, allora la funzione di wrapper imposta una variabile globale chiamata `errno`. Successivamente, la funzione di wrapper ritorna al chiamante un valore intero indicando il successo o il fallimento della system call. 

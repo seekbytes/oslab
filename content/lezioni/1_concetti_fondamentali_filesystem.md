@@ -49,7 +49,10 @@ FLAG | DESCRIZIONE
 `S_IRGRP` | il gruppo ha permessi di lettura
 `S_IWGRP` | il gruppo ha permessi di scrittura
 `S_IXGRP` | il gruppo ha permessi di esecuzione
-`S_IRWXO` | ...
+`S_IRWXO` | others hanno permessi di lettura, scrittura ed esecuzione
+`S_IROTH` | others hanno permessi di lettura
+`S_IWOTH` | others hanno permessi di scrittura
+`S_IXOTH` | others hanno permessi di esecuzione
 
 ### Umask
 
@@ -57,11 +60,11 @@ La maschera per la creazione di file utente è un attributo del processo che spe
 
 I permessi assegnati ad un nuovo file sono: `mode & ~umask` ovvero `mode AND (NOT mask)`. Puoi gestire umask tramite la shell utilizzando il comando `umask`.
 
-{{<summary title="Esempio">}}
+{{<summary title="Esempio con umask e bit">}}
 {{<highlight bash>}}
-Requested file perms: rw-rw---- (<- this is what we asked)
-Process umask: ----w--w- (<- this is what we are denied)
-Actual file perms: rw-r----- (<- So, this is what we get)
+Requested file perms:		rw-rw---- (<- this is what we asked)
+Process umask: 			----w--w- (<- this is what we are denied)
+Actual file perms: 		rw-r----- (<- So, this is what we get)
 {{</highlight>}}
 {{</summary>}}
 
@@ -70,11 +73,9 @@ Actual file perms: rw-r----- (<- So, this is what we get)
 int fd;
 // Open existing file for only writing.
 fd = open("myfile", O_WRONLY);
-// Open new or existing file for reading/writing, truncating
-// to zero bytes; file permissions read+write only for owner.
+// Open new or existing file for reading/writing, truncating to zero bytes; file permissions read+write only for owner.
 fd = open("myfile1", O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
-// Create and open a new file for reading/writing; file
-// permissions read+write only for owner.
+// Create and open a new file for reading/writing; file permissions read+write only for owner.
 fd = open("myfile2", O_RDWR | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
 {{</highlight>}}
 {{</summary>}}

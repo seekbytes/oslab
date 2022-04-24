@@ -173,7 +173,7 @@ struct mystruct *item = list_entry(listptr, struct mystruct, list);
 #### List_for_each
 
 Itera su ogni elemento di una lista doppiamente collegata. In dettaglio:
-* `ptr` è un puntatore variabile libero di tipo list_head_t;
+* `ptr` è un puntatore variabile libero di tipo `list_head_t`;
 * `head` è un puntatore al nodo di testa di una lista.
 
 Partendo dal primo elemento della lista, ad ogni chiamata `ptr` viene impostato con l
