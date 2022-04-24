@@ -17,6 +17,10 @@ body{
 		flex-direction: column-reverse;
 	}
 
+	.container{
+		margin: 10px;
+	}
+
 }
 
 @media screen and (min-width: 801px){
@@ -29,8 +33,11 @@ body{
 		margin: 0 auto;
 	}
 
-}
+	.content{
+		width: 100%;
+	}
 
+}
 
 .definition {
 	color: #ffffff;
@@ -61,7 +68,6 @@ a:visited, a:hover{
 }
 
 .content{
-	width: 100%;
 	padding: 0px 30px;
 }
 
