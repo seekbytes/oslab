@@ -1,9 +1,10 @@
 +++
 title = "Lezione 5 - Memoria condivisa e coda di messaggi"
 slug = "5-memoria-condivisa-coda-di-messaggi"
-description = "Utilizzo della memoria condivisa tra i processi e introduzione alla coda di messaggi"
+description = "Utilizzo della memoria condivisa tra i processi e introduzione alla coda di messaggi."
 date = 2022-03-29
 author = "SeekBytes"
+syscall = ["shmget", "shmat", "shmdt", "shmctl", "msgget", "msgsnd", "msgrcv", "msgctl"]
 +++
 
 ## Memoria condivisa
@@ -30,8 +31,8 @@ Gli argomenti chiave sono:
 uguale alla dimensione del segmento.
 
 `shmflg` è una maschera di bit che specifica i permessi (vedere la chiamata di sistema `open(...)` di sistema, argomento mode) da porre su un nuovo segmento di memoria condivisa o controllati su un segmento esistente. In aggiunta, i seguenti flag possono essere ORed (|) in shmflg:
-* IPC_CREAT: se non esiste alcun segmento con la chiave specificata, crea un nuovo segmento
-* IPC_EXCL: in combinazione con IPC_CREAT, fa fallire shmget se un segmento esiste con la chiave specificata.
+* `IPC_CREAT`: se non esiste alcun segmento con la chiave specificata, crea un nuovo segmento
+* `IPC_EXCL`: in combinazione con `IPC_CREAT`, fa fallire shmget se un segmento esiste con la chiave specificata.
 
 {{<summary title="Esempio di creazione di un segmento di memoria condiviso">}}
 int shmid;
@@ -64,7 +65,7 @@ void *shmat(int shmid, const void *shmaddr, int shmflg);
 Normalmente, shmaddr è NULL, per le seguenti ragioni: 
 * Aumenta la portabilità di un'applicazione. Un indirizzo valido su un'implementazione UNIX può essere non valido su un'altra.
 * Un tentativo di collegare un segmento di memoria condivisa ad un particolare indirizzo fallirà se quell'indirizzo è già in uso.
-In aggiunta a SHM_RND, il flag SHM_RDONLY può essere specificato per allegare una memoria condivisa per la sola lettura. Se shmflg ha valore zero, la memoria condivisa è collegata in modalità lettura e scrittura.
+In aggiunta a `SHM_RND`, la flag `SHM_RDONLY` può essere specificato per allegare una memoria condivisa per la sola lettura. Se shmflg ha valore zero, la memoria condivisa è collegata in modalità lettura e scrittura.
 
 Un processo figlio eredita i segmenti di memoria condivisa del suo genitore. La memoria condivisa fornisce un facile metodo di IPC tra genitore e figlio!
 
@@ -280,7 +281,7 @@ errExit("msgsnd failed");
 
 ### Ricevere un messaggio (msgrcv)
 
-La chiamata di sistema msgrcv legge e rimuove un messaggio da una coda.
+La chiamata di sistema `msgrcv` legge e rimuove un messaggio da una coda.
 
 {{<highlight c>}}
 #include <sys/msg.h>
@@ -423,8 +424,8 @@ if (msgctl(msqid, IPC_SET, &ds) == -1)
 Interfaccia | Coda di messaggi | Semafori | Memoria condivisa
 -- | -- | -- | --
 File header | `<sys/msg.h>` | `<sys/sem.h>` | `<sys/shm.h>`
-Struttura dati | msqid_ds | semid_ds | shmid_ds
-Creare/Apertura | msgget(..) | semget(..) | shmget(...)
-Close | nessuna | nessuna | shmdt(..)
-Operazioni di controllo | msgctl(..) | semctl(..) | shmctl(..)
-Fare operazioni di IPC | msgsnd(..) msgrcv(...) | semop() per aggiustare i valori | accesso diretto alla memoria condivisa
+Struttura dati | `msqid_ds` | `semid_ds` | `shmid_ds`
+Creazione/Apertura | `msgget(..)` | `semget(..)` | `shmget(...)`
+Chiusura | nessuna | nessuna | `shmdt(..)`
+Operazioni di controllo | `msgctl(..)` | `semctl(..)` | `shmctl(..)`
+Eseguire operazioni di IPC | `msgsnd(..)` `msgrcv(...)` | `semop()` per aggiustare i valori | accesso diretto alla memoria condivisa

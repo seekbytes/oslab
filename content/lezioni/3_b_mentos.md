@@ -178,7 +178,7 @@ nNode = next(c)
 if isHead(L, nNode) then
 	nNode = next(nNode)
 end if
-n = list entry(nNode)
+n = list_entry(nNode)
 {{</highlight>}}
 
 {{<summary title="Implementazione del Round Robin">}}
@@ -225,7 +225,7 @@ Output: prossimo processo
 n = c
 for all lNode ∈ L do
 	if !isHead(L,lNode) then
-		t = list entry(lNode)
+		t = list_entry(lNode)
 		if priority(t) < priority(n) then
 			n = t
 		end if

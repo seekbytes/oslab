@@ -1,6 +1,7 @@
 +++
 title = "Lezione 6 - Pipe e FIFO"
 slug = "6-pipe-fifo"
+description = "Utilizzo delle PIPE (introduzione, apertura ed utilizzo) e confronto con FIFO (evoluzione) apertura ed utilizzo."
 author = "SeekBytes"
 date = 2022-04-05
 +++
@@ -17,13 +18,13 @@ Una PIPE è un flusso di dati in byte che permette a processi di scambiare byte.
 
 * il tentativo di leggere da una PIPE vuota blocca il lettore finché almeno un byte è stato scritto nella PIPE oppure un segnale viene ricevuto (terminando con EINTR).
 
-* Se l'estremità in cui si scrive è chiusa, allora un processo che legge dalla PIPe vedrà un end-of-file quando ha letto tutti i dati sulla PIPE.
+* Se l'estremità in cui si scrive è chiusa, allora un processo che legge dalla PIPE vedrà un end-of-file quando ha letto tutti i dati sulla PIPE.
 
 * Un'operazione di scrittura è bloccata fino a quando:
 	* esiste altro spazio disponibile
 	* un segnale viene ricevuto
 
-* Operazioni di scrittura più larghi della PIPE_BUF bytes potrebbero essere divisi in segmenti di dimensioni arbitrarie
+* Operazioni di scrittura più larghi della `PIPE_BUF` bytes potrebbero essere divisi in segmenti di dimensioni arbitrarie
 
 ### Creazione e apertura pipe
 
@@ -41,6 +42,7 @@ filedes.
 
 * `filedes[0]` memorizza la fine della lettura del PIPE.
 * `filedes[1]` memorizza l'estremità di scrittura del PIPE.
+
 Come con qualsiasi descrittore di file, possiamo usare le chiamate di sistema read e write per eseguire I/O sul PIPE.
 Normalmente, usiamo un PIPE per permettere la comunicazione tra processi correlati. Per collegare due processi usando un PIPE, seguiamo la chiamata pipe con una chiamata a `fork`.
 
@@ -211,7 +213,8 @@ Flag | Descrizione
 `O_RDONLY` | Apre in sola lettura
 `O_WRONLY` | Apre in sola scrittura
 
-L'unico uso sensato di un FIFO è quello di avere un processo di lettura e uno di scrittura su ogni estremità. Per impostazione predefinita, l'apertura di una FIFO per la lettura (flag `O_RDONLY`) blocca finché un altro processo non apre la FIFO per la scrittura (flag `O_WRONLY`). Al contrario, l'apertura del FIFO per la scrittura blocca finché un altro processo apre la FIFO per la lettura. In altre parole, l'apertura di una FIFO sincronizza i processi di lettura e scrittura. Se l'estremità opposta di una FIFO è già aperta (forse perché una coppia di processi ha già aperto ciascuna estremità della FIFO), allora l'apertura ha successo immediatamente.
+L'unico uso sensato di un FIFO è quello di avere un processo di lettura e uno di scrittura su ogni estremità. Per impostazione predefinita, l'apertura di una FIFO per la lettura (flag `O_RDONLY`) è bloccante (quindi il processo si blocca finché un altro processo non apre la FIFO per la scrittura (flag `O_WRONLY`)). 
+Al contrario, l'apertura del FIFO per la scrittura blocca finché un altro processo apre la FIFO per la lettura. In altre parole, l'apertura di una FIFO sincronizza i processi di lettura e scrittura. Se l'estremità opposta di una FIFO è già aperta (forse perché una coppia di processi ha già aperto ciascuna estremità della FIFO), allora l'apertura ha successo immediatamente.
 
 {{<summary title="Esempio FIFO e sincronizzazione">}}
 <h4>Receiver</h4>

@@ -4,13 +4,12 @@ slug = "1-b-file-system"
 date = 2021-10-29
 description = "I file: open, write su file e su directory. Attributi di un file e permessi di file/cartelle."
 author = "SeekBytes"
+syscalls = ["open", "read", "write", "lseek", "close", "stat", "lstat", "fstat", "access", "chmod", "fchmod", "mkdir", "rmdir", "opendir", "closedir", "readdir"]
 +++
 
 ## File
 
-### Apertura file
-
-#### Open
+### Apertura file (Open)
 
 La system call open apre un file esistente. In alternativa, può creare e quindi aprire un nuovo file.
 
@@ -52,7 +51,7 @@ FLAG | DESCRIZIONE
 `S_IXGRP` | il gruppo ha permessi di esecuzione
 `S_IRWXO` | ...
 
-#### Umask
+### Umask
 
 La maschera per la creazione di file utente è un attributo del processo che specifica quali permessi dovrebbero essere sempre disattivati quando nuovi file sono creati da un processo. Nella maggior parte delle shell, il valore di default è 022.
 
@@ -80,7 +79,7 @@ fd = open("myfile2", O_RDWR | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
 {{</highlight>}}
 {{</summary>}}
 
-#### Read
+### Read
 
 La system call read legge dati da un file descriptor. Ritorna il numero di byte letti oppure -1 se fallisce. L'argomento count specifica il massimo numero di byte da leggere dal file descriptor. L'argomento buf è l'indirizzo di memoria in cui le informazioni lette vengono memorizzate.
 
@@ -125,7 +124,7 @@ printf("Input data: %s\n", buffer);
 Nota: con il terminale, la system call legge i caratteri fino a che non incontra la newline `\n`.
 {{</summary>}}
 
-#### Write
+### Write
 
 La system call write scrive dati su un file descriptor. Ritorna il numero di caratteri scritti o -1 se fallisce. L'argomento count specifica il numero di byte che il buffer buf contiene e che deve essere scritto sul file descriptor fd.
 
@@ -152,15 +151,17 @@ errExit("write");
 {{</summary>}}
 
 {{<summary title="Scrittura 'Ciao Mondo' su terminale">}}
+{{<highlight c>}}
 // A buffer collecting a string.
 char buffer[] = "Ciao Mondo";
 // Writing up tp sizeof(buffer) bytes on STDOUT.
 ssize_t numWrite = write(STDOUT_FILENO, buffer, sizeof(buffer));
 if (numWrite != sizeof(buffer))
     errExit("write");
+{{</highlight>}}
 {{</summary>}}
 
-#### Lseek
+### Lseek
 
 {{<highlight c>}}
 #include <unistd.h>
@@ -184,7 +185,7 @@ off_t current = lseek(fd3, -10, SEEK_CUR);
 off_t current = lseek(fd4, 10, SEEK_CUR);
 {{</summary>}}
 
-#### Close
+### Close
 
 La system call close chiude un file descriptor aperto. Anche se il sistema operativo già chiude tutti i file descriptor quando il processo è terminato, è comunque buona pratica chiudere i file descriptor non necessari.
 
@@ -194,7 +195,7 @@ La system call close chiude un file descriptor aperto. Anche se il sistema opera
 int close(int fd);
 {{</highlight>}}
 
-#### Unlink
+### Unlink
 
 La system call unlink permette di rimuovere un collegamento e se il collegamento è direttamente il file, allora lo rimuove. Unlink non può rimuovere una cartella (per questo vedi rmdir).
 
@@ -263,17 +264,17 @@ struct stat {
 
 Spiegazione di alcuni campi:
 
-* st_dev (anche chiamato device id): identifica il dispositivo in cui il file risiede;
-* st_ino: contiene il numero dell'i-node del file. La combinazione del device id e st_ino identifica in modo univoco un file
-* st_uid: id dell'utente a cui il file appartiene
-* st_gid: id del gruppo a cui il file appartiene
-* st_nlink (conta dei collegamenti): numero dei collegamenti al file
-* st_atime, st_mtime, st_ctime: contengono rispettivamente il tempo dell'ultimo accesso, dell'ultima modifica e dell'ultima modifica alle informazioni dell'i-node nel formato timestamp
+* `st_dev` (anche chiamato device id): identifica il dispositivo in cui il file risiede;
+* `st_ino`: contiene il numero dell'i-node del file. La combinazione del device id e st_ino identifica in modo univoco un file
+* `st_uid`: id dell'utente a cui il file appartiene
+* `st_gid`: id del gruppo a cui il file appartiene
+* `st_nlink` (conta dei collegamenti): numero dei collegamenti al file
+* `st_atime`, `st_mtime`, `st_ctime`: contengono rispettivamente il tempo dell'ultimo accesso, dell'ultima modifica e dell'ultima modifica alle informazioni dell'i-node nel formato timestamp
 
 **Dimensione dei file, blocchi allocati e dimensione ottimale dei blocchi I/O**: 
-Per i file regolari, il campo st_size è la dimensione totale del file in byte. Per un collegamento simbolico, questo campo contiene la lunghezza (in byte) del percorso indicato dal collegamento.
-Il campo st_blocks indica il numero di blocchi effettivamente assegnati al file in unità di blocco da 512 byte (potrebbe essere più piccolo di quanto ci si aspetta dalla dimensione st corrispondente se il file contiene dei buchi).
-La st_blksize è la dimensione ottimale del blocco (in byte) per l'I/O sui file su questo file system. L'I/O in blocchi più piccoli di questa dimensione è meno efficiente. Un tipico valore restituito in st_blksize è 4096.
+Per i file regolari, il campo `st_size` è la dimensione totale del file in byte. Per un collegamento simbolico, questo campo contiene la lunghezza (in byte) del percorso indicato dal collegamento.
+Il campo `st_blocks` indica il numero di blocchi effettivamente assegnati al file in unità di blocco da 512 byte (potrebbe essere più piccolo di quanto ci si aspetta dalla dimensione st corrispondente se il file contiene dei buchi).
+La `st_blksize` è la dimensione ottimale del blocco (in byte) per l'I/O sui file su questo file system. L'I/O in blocchi più piccoli di questa dimensione è meno efficiente. Un tipico valore restituito in `st_blksize` è 4096.
 
 #### Permessi dei file e tipo di file 
 
@@ -283,13 +284,13 @@ Il tipo di file può essere estratto da questo campo tramite AND (&) con la cost
 
 Costante | Macro di test | Tipo di file
 -- | -- | --
-S_IFREG | S_ISREG() | File normale
-S_IFDIR | S_ISDIR() | Cartella
-S_IFCHR | S_ISCHR() | Character Device
-S_IFBLK | S_ISBLK() | Block device
-S_IFIFO | S_ISFIFO() | FIFO oppure PIPE
-S_IFSOCK | S_ISSOCK() | Socket
-S_IFLNK | S_ISLNK()  | Collegamento
+`S_IFREG` | `S_ISREG()` | File normale
+`S_IFDIR` | `S_ISDIR()` | Cartella
+`S_IFCHR` | `S_ISCHR()` | Character Device
+`S_IFBLK` | `S_ISBLK()` | Block device
+`S_IFIFO` | `S_ISFIFO()` | FIFO oppure PIPE
+`S_IFSOCK` | `S_ISSOCK()` | Socket
+`S_IFLNK` | `S_ISLNK()`  | Collegamento
 
 {{<summary title="Esempio di come controllare se un file è un file normale">}}
 {{<highlight c>}}
@@ -307,7 +308,7 @@ if (S_ISREG(statbuf.st_mode))
 {{</highlight>}}
 {{</summary>}}
 
-![Permessi dei file](/images/lezioni/1/permissions.png)
+![Permessi dei file](../../images/lezioni/1/permissions.png)
 
 I bit nominati `U` e G sono utilizzati per gli eseguibili.
 
@@ -382,19 +383,21 @@ printf(" It looks like that I cannot read/write file.txt :(\n)")
 
 ### Cambiare i permessi ad un file
 
-
 #### chmod
 
 La system call chmod consente di cambiare i permessi ad un file. Prende in input pathname che è il nome del file e mode_t che sono i nuovi permessi del file.
 
+{{<highlight c>}}
+#include <sys/stat.h>
+int chmod(const char *pathname, mode_t mode);
+{{</highlight>}}
+
 #### fchmod
 
-Uguale alla chmod ma prende in input il file descriptor, al posto del pathname.
+Uguale alla chmod, prende in input il file descriptor, al posto del pathname.
 
 {{<highlight c>}}
 // All return 0 on success, or -1 on error
-#include <sys/stat.h>
-int chmod(const char *pathname, mode_t mode);
 #define _BSD_SOURCE
 #include <sys/stat.h>
 int fchmod(int fd, mode_t mode);
@@ -427,8 +430,7 @@ La chiamata di sistema mkdir crea una nuova directory.
 int mkdir(const char *pathname, mode_t mode);
 {{</highlight>}}
 
-L'argomento pathname specifica il nome del percorso della nuova directory. Questo percorso può essere relativo o assoluto. Se un file con questo nome di percorso esiste già, allora la chiamata fallisce con l'errore EEXIST.
-L'argomento mode specifica i permessi per la nuova directory (vedi capitolo File System, System Call open).
+L'argomento `pathname` specifica il nome del percorso della nuova directory. Questo percorso può essere relativo o assoluto. Se un file con questo nome di percorso esiste già, allora la chiamata fallisce con l'errore `EEXIST`. L'argomento mode specifica i permessi per la nuova directory (vedi capitolo File System, System Call open).
 
 #### rmdir
 

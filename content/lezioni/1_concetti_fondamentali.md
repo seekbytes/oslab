@@ -104,7 +104,7 @@ Più dettagli sono contenuto nel capitolo "File system".
 
 Tipica architettura del sistema operativo:
 
-![Tipica struttura di un sistema operativo](/images/lezioni/1/struttura-sistema-operativo.png)
+![Tipica struttura di un sistema operativo](../../images/lezioni/1/struttura-sistema-operativo.png)
 
 Una system call è una entry point controllata che permette ad un processo di richiedere un servizio al Kernel. Per esempio, i servizi che il kernel mette a disposizione includono: creazione di un nuovo processo, esecuzione di operazioni I/O, creazione di una pipe per la comunicazione tra più processi.
 
@@ -112,7 +112,7 @@ La pagina di manuale `syscalls(2)` include la lista delle system calls disponibi
 
 Dal punto di vista della programmazione, invocare una system calls è molto simile a chiamare una funzione C. Tuttavia, ciò che avviene dietro quell'invocazione è molto differente rispetto ad una chiamata di funzione. Di seguito i passi per l'esecuzione di una system call.
 
-![Esecuzione di una system call](/images/lezioni/1/system-call-esecuzione.png)
+![Esecuzione di una system call](../../images/lezioni/1/system-call-esecuzione.png)
 
 1. l'applicazione chiama una system call invocando una funzione di "wrapper" nella libreria C
 2. la funzione wrapper: copia gli argomenti della system call dallo stack a registri specifici della CPU e copia il numero di system call nel registro `%eax`. (Ogni system call ha associato un nome dato dalla libreria standard C e un numero univoco) Infine, il wrapper chiama l'interrupt per cambiare modalità da "utente" a "kernel mode" (`int 0x80`)

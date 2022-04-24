@@ -2,8 +2,9 @@
 title = "Lezione 4.B - IPC e Segnali"
 slug = "4-b-segnali-ipc"
 date = 2022-01-10
-description = "Introduzione ai segnali (inviare un segnale, gestire un segnale)"
+description = "Introduzione ai segnali (inviare un segnale, gestire un segnale)."
 author = "SeekBytes"
+syscall = ["signal", "pause", "sleep", "kill", "alarm", "sigemptyset", "sigfillset", "sigaddset", "sigismember", "sigprocmask"]
 +++
 
 ## Concetti fondamentali
@@ -16,7 +17,7 @@ Alla consegna di un segnale, un processo esegue una delle seguenti azioni predef
 * Il processo viene terminato (ucciso).
 * Il processo viene sospeso (fermato).
 * Il processo viene ripreso dopo essere stato precedentemente fermato.
-* Il segnale viene ignorato. Viene scartato dal kernel e non ha alcun effetto sul processo. (Il processo esegue un gestore di segnale, cioè una funzione scritta dal programmatore che esegue compiti appropriati in risposta alla consegna di un segnale.
+* Il segnale viene ignorato. Viene scartato dal kernel e non ha alcun effetto sul processo. Il processo esegue un gestore di segnale, cioè una funzione scritta dal programmatore che esegue compiti appropriati in risposta alla consegna di un segnale.
 
 ## Tipi di segnali
 
@@ -80,8 +81,8 @@ sighandler_t signal(int signum, sighandler_t handler);
 
 `signum` identifica il segnale di cui vogliamo cambiare la disposizione nel processo. `handler` può essere uno dei seguenti:
 * l'indirizzo di un gestore di segnale definito dall'utente.
-* la costante SIG DFL, che reimposta la disposizione predefinita del processo per il segnale signum.
-* la costante SIG IGN, che imposta il processo a ignorare la consegna del segnale signum.
+* la costante `SIG_DFL`, che reimposta la disposizione predefinita del processo per il segnale signum.
+* la costante `SIG_IGN`, che imposta il processo a ignorare la consegna del segnale signum.
 
 {{<summary title="Esempio di come catturare i segnali">}}
 void sigHandler(int sig) {
@@ -130,8 +131,7 @@ La funzione sleep sospende l'esecuzione del processo chiamante per il numero di 
 
 {{<highlight c>}}
 #include <unistd.h>
-unsigned int sleep(unsigned int seconds); // Returns 0 on normal completion, or
-number of unslept seconds if prematurely terminated
+unsigned int sleep(unsigned int seconds); // Returns 0 on normal completion, or number of unslept seconds if prematurely terminated
 {{</highlight>}}
 
 {{<summary title="Esempio di waiting di un segnale">}}

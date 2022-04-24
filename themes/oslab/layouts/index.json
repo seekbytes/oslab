@@ -1,5 +1,5 @@
 [
-  {{- with $.Site.GetPage "/" }}
+  {{- with $.Site.GetPage "/lezioni/" }}
     {{- range $index, $data := .Pages }}
     {{- if $index }},{{ end }}
     {

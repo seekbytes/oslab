@@ -1,7 +1,7 @@
 {{ partial "header.html" . }}
 
-<h1>Tutte le lezioni</h1>
-<p>Qui elencate vi sono tutte le lezioni di laboratorio.</p>
+<h1>{{.Title}}</h1>
+{{.Content}}
 
 {{ range .Pages.ByDate }}
 	<a href="{{.Permalink}}"><h2>{{.Title}}</h2></a>

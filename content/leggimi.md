@@ -9,7 +9,42 @@ Un pratico menù raggruppa tutte le lezioni di laboratorio (teoria) e permette d
 
 Tutti i refusi sono dati da errori di trascrizione e/o traduzione; chi è così gentile da volerlo segnalare, può creare una nuova [ISSUES](https://github.com/seekbytes/oslab/issues) oppure può correggere in modo autonomo l'errore e mandare una Pull Request.
 
-Sistemi operativi è sicuramente una materia affascinante, ma il troppo materiale da studiare per il laboratorio potrebbe spaventare uno studente (ecco il perché di questo sito). Potrebbe essere utile durante lo sviluppo del progetto di laboratorio.
+Sistemi operativi è sicuramente una materia affascinante, ma il troppo materiale da studiare per il laboratorio potrebbe spaventare uno studente (ecco il perché di questo sito). Questa risorsa quindi potrebbe essere utile durante lo sviluppo del progetto di laboratorio.
+
+## Note sui box
+
+Troverai dei box del genere che segnalano le definizioni:
+
+{{<definition name="Esempio">}}
+Questa è una definizione di esempio
+{{</definition>}}
+
+Blocchi di codice
+
+{{<highlight c>}}
+#include <sys/types.h>
+#include <dirent.h>
+// Returns pointer to an allocated structure describing the
+// next directory entry, or NULL on end-of-directory or error.
+struct dirent *readdir(DIR *dirp);
+{{</highlight>}}
+
+Ed esempi
+
+{{<summary title="Esempio">}}
+{{<highlight c>}}
+#include <stdio.h>
+
+int main(){
+	printf("Hello world!"); // can't use printf in SO!
+	return 0;
+}
+{{</highlight>}}
+{{</summary>}}
+
+## Informazioni
+
+Questo sito web è stato costruito con la versione Gohugo 
 
 <!--
 Infine, ultima nota, se il corso di sistemi operativi vi ha "fritto" il cervello, non disperate! Potete sempre provare a rilassarvi con ["Lo Stack da colorare"](/pdf/) e ["Unisci lo Heap"](/pdf/). O il cruciverba delle syscall. -->

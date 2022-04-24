@@ -2,7 +2,7 @@
 title = "Lezione 2 - Processi"
 slug = "2-processi"
 date = 2021-11-08
-syscall = ["fork", "getpid"]
+syscall = ["fork", "getpid", "getuid", "getgid", "geteuid", "getegid", "getenv", "setenv", "unsetenv", "getcwd", "chdir", "fchdir", "dup", "_exit", "exit", "atexit", "fork", "getppid", "wait", "waitpid", "execl", "execlp", "execle", "execv", "execv", "execvp", "execve"]
 description = "Interazioni tra processi: fork e execl, PID e File Descriptor Table."
 author = "SeekBytes"
 +++
@@ -746,6 +746,6 @@ TODO: mancano gli altri esempi su execl
 
 Quello che dovreste sempre tenere a mente quando usate una funzione exec:
 * Il parametro di input del programma punta ad un eseguibile;
-* Le liste e gli array sono sempre terminati con un puntatore NULL `(char \*)NULL`;
+* Le liste e gli array sono sempre terminati con un puntatore NULL `(char *)NULL`;
 * Per convenzione, il primo elemento di argv è il nome del programma;
 * Tutte le funzioni exec non restituiscono alcun risultato in caso di successo.

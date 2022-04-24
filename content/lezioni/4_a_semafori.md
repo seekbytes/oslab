@@ -4,9 +4,8 @@ slug = "4-a-semafori-ipc"
 date = 2022-01-10
 description = "SystemV, come comunicare con i semafori (apertura, chiusura, gestione e incremento/decremento)."
 author = "SeekBytes"
+syscall = ["IPC_PRIVATE", "ftok", "semget", "semctl", "semop"]
 +++
-
-## Introduzione alla comunicazione tra processi
 
 {{<definition name="Unix System V">}}
 Unix System V è una delle prime versioni commerciali del sistema operativo Unix del sistema operativo Unix. È stato originariamente sviluppato da AT&T e rilasciato per la prima volta nel 1983. Sono state rilasciate quattro versioni principali di System V, numerate 1, 2, 3, e 4. SystemV è talvolta abbreviato in SysV.
@@ -15,6 +14,8 @@ Unix System V è una delle prime versioni commerciali del sistema operativo Unix
 {{<definition name="Comunicazione tra processi">}}
 La comunicazione interprocesso (IPC) si riferisce a meccanismi che coordinano le attività tra processi cooperanti. Un esempio comune di questa necessità è la gestione dell'accesso a una data risorsa di sistema.
 {{</definition>}}
+
+## Introduzione alla comunicazione tra processi
 
 System V IPCs si riferisce a tre diversi meccanismi per la comunicazione interprocesso
 comunicazione:
@@ -29,7 +30,7 @@ Altri tipi di IPC includono:
 
 ### Creazione e apertura 
 
-Ogni meccanismo IPC di System V ha una chiamata di sistema associata get (msgget, semget, o shmget), che è analoga alla chiamata di sistema open. Data una chiave intera (analoga ad un nome di file), la chiamata di sistema get può creare prima un nuovo IPC e poi restituire il suo identificatore unico, oppure restituire l'identificatore di un IPC esistente. Un identificatore IPC è analogo ad un descrittore di file. Viene usato in tutte le successive chiamate di sistema per riferirsi all'oggetto IPC.
+Ogni meccanismo IPC di System V ha una chiamata di sistema associata get (`msgget`, `semget`, o `shmget`), che è analoga alla chiamata di sistema open. Data una chiave intera (analoga ad un nome di file), la chiamata di sistema get può creare prima un nuovo IPC e poi restituire il suo identificatore unico, oppure restituire l'identificatore di un IPC esistente. Un identificatore IPC è analogo ad un descrittore di file. Viene usato in tutte le successive chiamate di sistema per riferirsi all'oggetto IPC.
 
 {{<summary title="Creare un semaforo">}}
 {{<highlight c>}}

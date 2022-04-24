@@ -4,6 +4,7 @@ slug = "3-mentos"
 date = 2021-11-29
 description = "Prima parte: introduzione a MentOS e come funziona."
 author = "SeekBytes"
+syscall = ["list_head_empty", "list_head_add", "list_head_add_tail", "list_head_del", "list_entry", "list_for_each"]
 +++
 
 ## Che cosa è?
@@ -144,7 +145,7 @@ Restituisce un valore diverso da zero se la lista data è vuota.
 * `list_head_add(list_head_t *new, list_head_t *listnode)`:\
 Questa funzione aggiunge la nuova voce immediatamente dopo il listnode.
 
-* l`ist_head_add tail(list_head_t *new, list_head_t *listnode)`:\
+* `list_head_add_tail(list_head_t *new, list_head_t *listnode)`:\
 Questa funzione aggiunge la nuova voce immediatamente prima del listnode.
 
 * `list_head_del(list_head_t *entry):`\
@@ -157,9 +158,9 @@ La voce data viene rimossa dalla lista.
 {{</highlight>}}
 
 Restituisce la struct che incorpora una testa di lista. In dettaglio:
-* ptr è un puntatore ad una testa di lista t;
-* type of struct è il nome del tipo della struct che incorpora una list_head_t;
-* field name è il nome della testa di lista t puntata all'interno della struct.
+* `ptr` è un puntatore ad una testa di lista t;
+* `type` of struct è il nome del tipo della struct che incorpora una list_head_t;
+* `field` name è il nome della testa di lista t puntata all'interno della struct.
 
 {{<summary title="Esempio di come utilizzare la list_entry.">}}
 {{<highlight c>}}
