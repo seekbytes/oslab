@@ -1,6 +1,31 @@
+/*
+	Print.css for printing 
+	Utilizzato quando si deve stampare la pagina
+	Author: seekbytes;
+*/
+
 @media print{
+
+	/* Non mostrare il menù laterale, gli esempi e il footer */
 	footer, nav, summary, hr, .navbar-lat{
 		display: none;
+	}
+
+	@page{
+		margin: 1cm;
+	}
+
+	h1 {
+		font-size: 24pt;
+	}
+
+	h2, h3, h4 {
+		font-size: 14pt;
+		margin-top: 25px;
+	}
+
+	code{
+		page-break-inside: avoid;
 	}
 
 	*{

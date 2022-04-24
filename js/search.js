@@ -23,7 +23,7 @@ window.addEventListener('keydown', function(event) {
  * Get the posts lists in json format.
  */
 const getPostsJSON = async () => {
-    let response = await fetch('/index.json')
+    let response = await fetch('/oslab/index.json')
     let data = await response.json()
     return data
 }

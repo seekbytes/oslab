@@ -1,3 +1,8 @@
+/*
+	Style.css for OSLAB
+	Author: SeekBytes;
+*/
+
 body{
 	margin: 0px;
 	padding: 0px;
@@ -65,7 +70,7 @@ a:visited, a:hover{
 }
 
 table {
-	margin: 15px auto 0px;
+	margin: 15px auto 15px;
 	border-collapse: collapse;
 }
 
@@ -86,6 +91,11 @@ footer{
 	margin: 0px;
 	padding: 0px;
 	background-color: #ededed !important;
+}
+
+pre {
+	white-space: pre-wrap;
+	word-break: break-all;
 }
 
 .highlight{
@@ -120,3 +130,4 @@ details b{
 	font-size: 1rem;
 	color: grey;
 }
+
