@@ -40,34 +40,37 @@
 </span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></div></details><h3 id=mandare-un-segnale-kill>Mandare un segnale (kill)</h3><p>La system call kill manda un segnale ad un altro processo.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;signal.h&gt;</span><span class=cp>
 </span></span></span><span class=line><span class=cl><span class=cp></span><span class=c1>// Returns 0 on success, or -1 on error
 </span></span></span><span class=line><span class=cl><span class=c1></span><span class=kt>int</span> <span class=nf>kill</span><span class=p>(</span><span class=n>pid_t</span> <span class=n>pid</span><span class=p>,</span> <span class=kt>int</span> <span class=n>sig</span><span class=p>);</span></span></span></code></pre></div><p>L&rsquo;argomento pid identifica uno o più processi a cui il segnale specificato da sig deve essere inviato.</p><ul><li>(pid > 0): il segnale viene inviato al processo con PID uguale a pid.</li><li>(pid = 0): il segnale viene inviato ad ogni processo nello stesso gruppo di processi del processo chiamante, incluso il processo chiamante stesso.</li><li>(pid &lt; 0): il segnale viene inviato a tutti i processi nel gruppo di processi il cui ID è uguale al valore assoluto di pid.</li><li>(pid = -1): il segnale viene inviato ad ogni processo per il quale il processo chiamante ha il permesso di inviare un segnale, eccetto init e il processo
-stesso.</li></ul><details><summary><b>Inviare un segnale SIGKILL ad un processo figlio</b></summary>
-int main (int argc, char <em>argv[]) {
-pid_t child = fork();
-switch(child) {
-case -1:
-errExit(&ldquo;fork&rdquo;);
-case 0: /</em> Child process <em>/
-while(1); // &lt;- child is stuck here!
-default: /</em> Parent process */
-sleep(10); // wait 10 seconds
-kill(child, SIGKILL); // kill the child process
-}
-return 0;
-}</details><h3 id=alarm>Alarm</h3><p>La chiamata al sistema di allarme fa in modo che un segnale <code>SIGALRM</code> sia consegnato al al processo chiamante dopo un ritardo fisso.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;signal.h&gt;</span><span class=cp>
+stesso.</li></ul><details><summary><b>Inviare un segnale SIGKILL ad un processo figlio</b></summary><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span> <span class=p>(</span><span class=kt>int</span> <span class=n>argc</span><span class=p>,</span> <span class=kt>char</span> <span class=o>*</span><span class=n>argv</span><span class=p>[])</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=n>pid_t</span> <span class=n>child</span> <span class=o>=</span> <span class=n>fork</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>	<span class=k>switch</span><span class=p>(</span><span class=n>child</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>case</span> <span class=o>-</span><span class=mi>1</span><span class=o>:</span>
+</span></span><span class=line><span class=cl>		<span class=n>errExit</span><span class=p>(</span><span class=s>&#34;fork&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>	<span class=k>case</span> <span class=mi>0</span><span class=o>:</span> <span class=cm>/* Child process */</span>
+</span></span><span class=line><span class=cl>		<span class=k>while</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span> <span class=c1>// &lt;- child is stuck here!
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=k>default</span><span class=o>:</span> <span class=cm>/* Parent process */</span>
+</span></span><span class=line><span class=cl>		<span class=n>sleep</span><span class=p>(</span><span class=mi>10</span><span class=p>);</span> <span class=c1>// wait 10 seconds
+</span></span></span><span class=line><span class=cl><span class=c1></span>		<span class=n>kill</span><span class=p>(</span><span class=n>child</span><span class=p>,</span> <span class=n>SIGKILL</span><span class=p>);</span> <span class=c1>// kill the child process
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></div></details><h3 id=alarm>Alarm</h3><p>La chiamata al sistema di allarme fa in modo che un segnale <code>SIGALRM</code> sia consegnato al al processo chiamante dopo un ritardo fisso.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;signal.h&gt;</span><span class=cp>
 </span></span></span><span class=line><span class=cl><span class=cp></span>
 </span></span><span class=line><span class=cl><span class=c1>// Always succeeds, returning number of seconds remaining on
 </span></span></span><span class=line><span class=cl><span class=c1>// any previously set timer, or 0 if no timer previously was set
-</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kt>unsigned</span> <span class=kt>int</span> <span class=nf>alarm</span><span class=p>(</span><span class=kt>unsigned</span> <span class=kt>int</span> <span class=n>seconds</span><span class=p>);</span></span></span></code></pre></div><p>L&rsquo;argomento seconds specifica il numero di secondi nel futuro in cui il timer deve scadere. In quel momento, un segnale SIGALRM viene consegnato al processo chiamante. L&rsquo;impostazione di un timer con allarme sovrascrive qualsiasi timer precedentemente impostato.</p><details><summary><b>Impostare un timer con la syscall alarm</b></summary><p>void sigHandler(int sig) { printf(&ldquo;Out of time!\n&rdquo;); _exit(0); }</p><p>int main (int argc, char *argv[]) {
-if (signal(SIGALRM, sigHandler) == SIG_ERR)
-errExit(&ldquo;change signal handler failed&rdquo;);</p><pre><code>int time = 30;
-printf(&quot;We have %d seconds to complete the job!\n&quot;, time);
-alarm(time); // setting a timer
-
-/* Do something else here. */
-time = alarm(0); // disabling timer
-printf(&quot;%s seconds before timer expirations!\n&quot;, time);
-return 0;
-</code></pre><p>}</p></details><h2 id=impostare-o-bloccare-un-segnale>Impostare o bloccare un segnale</h2><h3 id=set-di-segnali-sigemptyset-e-sigfillset>Set di segnali (sigemptyset e sigfillset)</h3><p>Il tipo di dati sigset t rappresenta un insieme di segnali. Le funzioni <code>sigemptyset</code> e <code>sigfillet</code> devono essere utilizzate per inizializzare un insieme di segnali, prima di utilizzarlo in qualsiasi altro modo.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;signal.h&gt;</span><span class=cp>
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kt>unsigned</span> <span class=kt>int</span> <span class=nf>alarm</span><span class=p>(</span><span class=kt>unsigned</span> <span class=kt>int</span> <span class=n>seconds</span><span class=p>);</span></span></span></code></pre></div><p>L&rsquo;argomento seconds specifica il numero di secondi nel futuro in cui il timer deve scadere. In quel momento, un segnale SIGALRM viene consegnato al processo chiamante. L&rsquo;impostazione di un timer con allarme sovrascrive qualsiasi timer precedentemente impostato.</p><details><summary><b>Impostare un timer con la syscall alarm</b></summary><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=kt>void</span> <span class=nf>sigHandler</span><span class=p>(</span><span class=kt>int</span> <span class=n>sig</span><span class=p>)</span> <span class=p>{</span> <span class=n>printf</span><span class=p>(</span><span class=s>&#34;Out of time!</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>);</span> <span class=n>_exit</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span> <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kt>int</span> <span class=nf>main</span> <span class=p>(</span><span class=kt>int</span> <span class=n>argc</span><span class=p>,</span> <span class=kt>char</span> <span class=o>*</span><span class=n>argv</span><span class=p>[])</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=p>(</span><span class=n>signal</span><span class=p>(</span><span class=n>SIGALRM</span><span class=p>,</span> <span class=n>sigHandler</span><span class=p>)</span> <span class=o>==</span> <span class=n>SIG_ERR</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>		<span class=n>errExit</span><span class=p>(</span><span class=s>&#34;change signal handler failed&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=kt>int</span> <span class=n>time</span> <span class=o>=</span> <span class=mi>30</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>	<span class=n>printf</span><span class=p>(</span><span class=s>&#34;We have %d seconds to complete the job!</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>time</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>	<span class=n>alarm</span><span class=p>(</span><span class=n>time</span><span class=p>);</span> <span class=c1>// setting a timer
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl>	<span class=cm>/* Do something else here. */</span>
+</span></span><span class=line><span class=cl>	<span class=n>time</span> <span class=o>=</span> <span class=n>alarm</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span> <span class=c1>// disabling timer
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=n>printf</span><span class=p>(</span><span class=s>&#34;%s seconds before timer expirations!</span><span class=se>\n</span><span class=s>&#34;</span><span class=p>,</span> <span class=n>time</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>	<span class=k>return</span> <span class=mi>0</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span></span></span></code></pre></div></details><h2 id=impostare-o-bloccare-un-segnale>Impostare o bloccare un segnale</h2><h3 id=set-di-segnali-sigemptyset-e-sigfillset>Set di segnali (sigemptyset e sigfillset)</h3><p>Il tipo di dati sigset t rappresenta un insieme di segnali. Le funzioni <code>sigemptyset</code> e <code>sigfillet</code> devono essere utilizzate per inizializzare un insieme di segnali, prima di utilizzarlo in qualsiasi altro modo.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-c data-lang=c><span class=line><span class=cl><span class=cp>#include</span> <span class=cpf>&lt;signal.h&gt;</span><span class=cp>
 </span></span></span><span class=line><span class=cl><span class=cp></span>
 </span></span><span class=line><span class=cl><span class=k>typedef</span> <span class=kt>unsigned</span> <span class=kt>long</span> <span class=n>sigset_t</span><span class=p>;</span>
 </span></span><span class=line><span class=cl><span class=c1>// Both return 0 on success, or -1 on error.
