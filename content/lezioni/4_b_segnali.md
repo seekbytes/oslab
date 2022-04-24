@@ -85,6 +85,7 @@ sighandler_t signal(int signum, sighandler_t handler);
 * la costante `SIG_IGN`, che imposta il processo a ignorare la consegna del segnale signum.
 
 {{<summary title="Esempio di come catturare i segnali">}}
+{{<highlight c>}}
 void sigHandler(int sig) {
 	printf("The signal %s was caught!\n",
 	(sig == SIGINT)? "Ctrl-C" : "signal User-1");
@@ -104,6 +105,7 @@ int main (int argc, char *argv[]) {
 	}
 	return 0;
 }
+{{</highlight>}}
 {{</summary>}}
 
 Cose da tenere a mente quando si utilizzano signal handlers:
