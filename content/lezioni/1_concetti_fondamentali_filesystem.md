@@ -21,7 +21,7 @@ La system call open apre un file esistente. In alternativa, può creare e quindi
 int open(const char *pathname, int flags, .../*mode_t mode */);
 {{</highlight>}}
 
-Se ha successo, ritorna il file descriptor che è usato per riferirsi al file in tutte le system call successivi. Il file da essere aperto / creato è identificato dall'argomento pathname.
+Se ha successo, ritorna il file descriptor che è usato per riferirsi al file in tutte le system call successivi. Il file da essere aperto / creato è identificato dall'argomento `pathname`.
 
 L'argomento `flags` è una bit mask di una o più costanti che specifica in che modalità aprire il file.
 
@@ -35,9 +35,9 @@ FLAG | DESCRIZIONE
 `O_CREAT` | Crea un file se non esiste già
 `O_EXCL` | Utilizzata insieme alla O_CREAT, forza la creazione del file
 
-Quando un nuovo file viene creato, allora anche il terzo argomento mode viene considerato.
+Quando un nuovo file viene creato, allora anche il terzo argomento `mode` viene considerato.
 
-L'argomento mode è una bitmast di uno o dei seguenti valori che specificano i permessi per il nuovo file.
+L'argomento `mode` è una bitmask di uno o dei seguenti valori che specificano i permessi per il nuovo file.
 
 FLAG | DESCRIZIONE
 -- | --
@@ -82,7 +82,7 @@ fd = open("myfile2", O_RDWR | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
 
 ### Read
 
-La system call read legge dati da un file descriptor. Ritorna il numero di byte letti oppure -1 se fallisce. L'argomento count specifica il massimo numero di byte da leggere dal file descriptor. L'argomento buf è l'indirizzo di memoria in cui le informazioni lette vengono memorizzate.
+La system call read legge dati da un file descriptor. Ritorna il numero di byte letti oppure -1 se fallisce. L'argomento `count` specifica il massimo numero di byte da leggere dal file descriptor. L'argomento `buf` è l'indirizzo di memoria in cui le informazioni lette vengono memorizzate.
 
 {{<highlight c>}}
 #include <unistd.h>
@@ -106,9 +106,9 @@ ssize_t numRead = read(fd, buffer, MAX_READ);
 if (numRead == -1)
 	errExit("read");
 {{</highlight>}}
-
-Nota: con un file, il valore di ritorno zero indica che si è raggiunto l'End-of-File.
 {{</summary>}}
+
+Nota: con un file, il valore di ritorno zero indica che si è raggiunto l'**End-of-File**.
 
 {{<summary title="Lettura di dati da terminale">}}
 {{<highlight c>}}
@@ -127,7 +127,7 @@ Nota: con il terminale, la system call legge i caratteri fino a che non incontra
 
 ### Write
 
-La system call write scrive dati su un file descriptor. Ritorna il numero di caratteri scritti o -1 se fallisce. L'argomento count specifica il numero di byte che il buffer buf contiene e che deve essere scritto sul file descriptor fd.
+La system call write scrive dati su un file descriptor. Ritorna il numero di caratteri scritti o -1 se fallisce. L'argomento count specifica il numero di byte che il buffer `buf` contiene e che deve essere scritto sul file descriptor `fd`.
 
 {{<highlight c>}}
 #include <unistd.h>
@@ -164,6 +164,8 @@ if (numWrite != sizeof(buffer))
 
 ### Lseek
 
+Per ogni file aperto, il kernel salva un *file offset* che è la posizione da dove la prossima lettura o scrittura inizierà. La system call `lseek` aggiusta la posizione dell'offset di un file aperto.
+
 {{<highlight c>}}
 #include <unistd.h>
 
@@ -171,9 +173,7 @@ if (numWrite != sizeof(buffer))
 off_t lseek(int fd, off_t offset, int whence);
 {{</highlight>}}
 
-Per ogni file aperto, il kernel salva un *file offset* che è la posizione da dove la prossima lettura o scrittura inizierà. La system call `lseek` aggiusta la posizione dell'offset di un file aperto.
-
-L'argomento fd specifica il file descriptor del file aperto, offset specifica un valore in byte, mentre whence indica il punto di partenza da cui l'offset deve essere interpretato.
+L'argomento `fd` specifica il file descriptor del file aperto, `offset` specifica un valore in byte, mentre `whence` indica il punto di partenza da cui l'offset deve essere interpretato.
 
 {{<summary title="Esempio">}}
 {{<highlight c>}}
@@ -187,6 +187,16 @@ off_t current = lseek(fd3, -10, SEEK_CUR);
 off_t current = lseek(fd4, 10, SEEK_CUR);
 {{</highlight>}}
 {{</summary>}}
+
+Valore di whence di esempio:
+
+Costante | Descrizione
+-- | --
+`SEEK_SET` | Imposta il seek all'offset indicato da `offset`
+`SEEK_END` | Imposta il seek a SEEK_END + `offset`
+`SEEK_CURR` | Imposta il seek a SEEK_CURR + `offset`
+
+**Attenzione**: qualsiasi chiamata a write/read modifica il file offset del file! È bene prestare molta attenzione quando si cerca di utilizzare la lseek e write/read.
 
 ### Close
 
@@ -281,9 +291,9 @@ La `st_blksize` è la dimensione ottimale del blocco (in byte) per l'I/O sui fil
 
 #### Permessi dei file e tipo di file 
 
-Il campo st mode è una maschera di bit che serve al doppio scopo di identificare il tipo di file e specificare i permessi del file. 
+Il campo `st_mode` è una maschera di bit che serve al doppio scopo di identificare il tipo di file e specificare i permessi del file. 
 
-Il tipo di file può essere estratto da questo campo tramite AND (&) con la costante S_IFMT, e poi confrontando il risultato con una serie di costanti. Poiché questa è un'operazione comune, vengono fornite delle macro standard.
+Il tipo di file può essere estratto da questo campo tramite AND (&) con la costante `S_IFMT`, e poi confrontando il risultato con una serie di costanti. Poiché questa è un'operazione comune, vengono fornite delle macro standard.
 
 Costante | Macro di test | Tipo di file
 -- | -- | --
@@ -433,7 +443,7 @@ La chiamata di sistema mkdir crea una nuova directory.
 int mkdir(const char *pathname, mode_t mode);
 {{</highlight>}}
 
-L'argomento `pathname` specifica il nome del percorso della nuova directory. Questo percorso può essere relativo o assoluto. Se un file con questo nome di percorso esiste già, allora la chiamata fallisce con l'errore `EEXIST`. L'argomento mode specifica i permessi per la nuova directory (vedi capitolo File System, System Call open).
+L'argomento `pathname` specifica il nome del percorso della nuova directory. Questo percorso può essere relativo o assoluto. Se un file con questo nome di percorso esiste già, allora la chiamata fallisce con l'errore `EEXIST`. L'argomento mode specifica i permessi per la nuova directory (vedi [System Call open](/oslab/lezioni/1-b-file-system/#apertura-file-open)).
 
 #### rmdir
 
@@ -484,7 +494,7 @@ La chiamata di sistema readdir legge il contenuto di una directory.
 struct dirent *readdir(DIR *dirp);
 {{</highlight>}}
 
-Ogni chiamata a readdir legge la prossima voce di file/directory dal flusso di directory a cui fa riferimento dirp. Ogni voce è una struct definita come segue:
+Ogni chiamata a readdir legge la prossima voce di file/directory dal flusso di directory a cui fa riferimento `dirp`. Ogni voce è una struct `dirent` definita come segue:
 
 {{<highlight c>}}
 struct dirent {
@@ -515,8 +525,9 @@ errno = 0;
 struct dirent *dentry;
 // Iterate until NULL is returned as a result.
 while ( (dentry = readdir(dp)) != NULL ) {
-if (dentry->d_type == DT_REG)
-    printf("Regular file: %s\n", dentry->d_name);
+	if (dentry->d_type == DT_REG)
+	    printf("Regular file: %s\n", dentry->d_name);
+	
 	errno = 0; 
 }
 // NULL is returned on error, and when the end-of-directory is reached!

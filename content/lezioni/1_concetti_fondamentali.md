@@ -29,8 +29,8 @@ Tipica configurazione dello spazio di RAM di un processo:
 * il codice di sola lettura contenente le istruzioni macchina sono memorizzate in un segmento chiamato **text**
 * il segmento di dati inizializzati (contiene le variabili statiche e globali) si chiama **data**
 * il segmento che contiene variabili statiche e globali **NON** ancora inizializzate si chiama **BSS**
-* il segmento che contiene le variabile allocate dinamicamente si chiama heap
-* lo stack contiene ogni funzione chiamata, i suoi argomenti e tutte le variabili locali
+* il segmento che contiene le variabile allocate dinamicamente si chiama **heap**
+* lo **stack** contiene ogni funzione chiamata, i suoi argomenti e tutte le variabili locali
 
 {{<summary title="Esempio">}}
 {{<highlight c>}}
@@ -121,7 +121,7 @@ Dal punto di vista della programmazione, invocare una system calls è molto simi
 5. La routine ripristina i valori dei registri dallo stack del kernel e pone il risultato della system call sullo stack. Simultaneamente, la routine cambia modalità da kernel a user mode e ritorna all'esecuzione della funzione wrapper
 6. Se il valore di ritorno della chiamata di sistema indica un errore, allora la funzione di wrapper imposta una variabile globale chiamata `errno`. Successivamente, la funzione di wrapper ritorna al chiamante un valore intero indicando il successo o il fallimento della system call. 
 
-Per convenzione, il numero negativo -1 o il puntatore `NULL` indica un errore all'applicazione chiamante.
+Per convenzione, il numero negativo -1 o il puntatore `NULL` indica un errore alla syscall chiamante.
 
 ## Gestire gli errori
 

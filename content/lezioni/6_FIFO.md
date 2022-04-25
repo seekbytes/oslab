@@ -22,10 +22,10 @@ Una PIPE è un flusso di dati in byte che permette a processi di scambiare byte.
 * Se l'estremità in cui si scrive è chiusa, allora un processo che legge dalla PIPE vedrà un end-of-file quando ha letto tutti i dati sulla PIPE.
 
 * Un'operazione di scrittura è bloccata fino a quando:
-	* esiste altro spazio disponibile
-	* un segnale viene ricevuto
+	* non esiste altro spazio disponibile
+	* un segnale non viene ricevuto
 
-* Operazioni di scrittura più larghi della `PIPE_BUF` bytes potrebbero essere divisi in segmenti di dimensioni arbitrarie
+* Operazioni di scrittura più larghi della `PIPE_BUF` bytes potrebbero essere divisi in segmenti di dimensioni arbitrarie.
 
 ### Creazione e apertura pipe
 
@@ -41,11 +41,11 @@ int pipe(int filedes[2]);
 Una chiamata riuscita a pipe restituisce due descrittori di file aperti nell'array
 filedes.
 
-* `filedes[0]` memorizza la fine della lettura del PIPE.
-* `filedes[1]` memorizza l'estremità di scrittura del PIPE.
+* `filedes[0]` memorizza l'estremità di **lettura** del PIPE.
+* `filedes[1]` memorizza l'estremità di **scrittura** del PIPE.
 
-Come con qualsiasi descrittore di file, possiamo usare le chiamate di sistema read e write per eseguire I/O sul PIPE.
-Normalmente, usiamo un PIPE per permettere la comunicazione tra processi correlati. Per collegare due processi usando un PIPE, seguiamo la chiamata pipe con una chiamata a `fork`.
+Come con qualsiasi descrittore di file, possiamo usare le chiamate di sistema read e write per eseguire I/O sulla PIPE.
+Normalmente, usiamo una PIPE per permettere la comunicazione tra processi **correlati** (ovvero con una relazione di parentela). Per collegare due processi usando un PIPE, seguiamo la chiamata pipe con una chiamata a `fork`.
 
 {{<summary title="Creazione di una PIPE - esempio 1">}}
 {{<highlight c>}}
@@ -66,7 +66,7 @@ switch(fork()) {
 }
 {{</highlight>}}
 
-1. Pipe crea una nuova PIPE. fd[0] è l'estremità per la lettura, f[1] è l'estremità per la scrittura. 
+1. Pipe crea una nuova PIPE. `fd[0]` è l'estremità per la lettura, `f[1]` è l'estremità per la scrittura. 
 
 2. `fork()` crea un processo figlio che eredita la file descriptor table dal processo genitore.
 
@@ -194,7 +194,7 @@ La system call `mkfifo` crea una nuova FIFO.
 int mkfifo(const char *pathname, mode_t mode);
 {{</highlight>}}
 
-Il parametro pathname specifica dove la FIFO è aperta. Come per un normale file, il parametro mode specifica i permessi della FIFO (vedi [prima lezione](/lezioni/1-b-file-system/)). Una volta che la FIFO è stata creata, qualsiasi processo può aprirla.
+Il parametro `pathname` specifica dove la FIFO è aperta. Come per un normale file, il parametro `mode` specifica i permessi della FIFO (vedi [prima lezione](/lezioni/1-b-file-system/)). Una volta che la FIFO è stata creata, qualsiasi processo può aprirla.
 
 ### Open per le FIFO
 
@@ -250,3 +250,13 @@ write(fd, buffer, strlen(buffer));
 close(fd);
 {{</highlight>}}
 {{</summary>}}
+
+## Rimuovere una FIFO
+
+Per rimuovere una FIFO si utilizza la funzione unlin che permette di rimuovere un collegamento e se il collegamento è direttamente il file, allora lo rimuove. Unlink non può rimuovere una cartella (per questo vedi rmdir).
+
+{{<highlight c>}}
+#include <unistd.h>
+// Returns 0 on success, or -1 on error
+int unlink(const char *pathname);
+{{</highlight>}}

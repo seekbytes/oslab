@@ -21,6 +21,10 @@ body{
 		margin: 10px;
 	}
 
+	.content{
+		padding-top: 30px!important;
+	}
+
 }
 
 @media screen and (min-width: 801px){
@@ -36,6 +40,11 @@ body{
 	.content{
 		width: 100%;
 	}
+
+	.navbar-lat{
+		min-width: 500px;
+	}
+
 
 }
 
@@ -55,12 +64,12 @@ pre{
     overflow-x: scroll;
 }
 
-a:visited, a:hover{
-	color: inherit;
+a{
+	color: #005a9f;
 }
 
-.navbar-lat{
-	min-width: 500px;
+a:hover{
+	color: #065b9b;
 }
 
 .flex{
@@ -91,6 +100,7 @@ td, th{
 footer{
 	border-top: 1px solid #ededed;
 	color: #595858;
+	margin-top: 15px;
 }
 
 .highlight pre{
@@ -137,3 +147,9 @@ details b{
 	color: grey;
 }
 
+#searchInput{
+	padding: 20px;
+	font-size: 1.2rem;
+	border: 1px solid black;
+	width: 40%;
+}

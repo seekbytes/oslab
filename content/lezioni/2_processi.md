@@ -40,7 +40,7 @@ Con l'eccezione di alcuni processi di sistema come `init` (process ID 1), non c'
 `user@localhost[~]$ ps auxf`
 {{</summary>}}
 
-NOTA BENE: la chiamata a getpid funziona SEMPRE!!!
+Nota bene: la chiamata a getpid funziona SEMPRE!!!
 
 ### Real User ID e Effective User ID
 
@@ -48,7 +48,7 @@ NOTA BENE: la chiamata a getpid funziona SEMPRE!!!
 
 Le chiamate di sistema `getuid` e `getgid` restituiscono, rispettivamente, l'ID utente reale e l'ID del gruppo reale del processo chiamante. Le chiamate di sistema `geteuid` e `getegid` eseguono i compiti corrispondenti per gli ID effettivi.
 
-NOTA BENE: funzionano sempre.
+Nota bene: funzionano sempre, non ritornano alcun tipo di errore.
 
 {{<highlight c>}}
 #include <unistd.h>
@@ -69,7 +69,7 @@ Questo è il contenuto di un file program.c
 {{<highlight c>}}
 #include <unistd.h>
 #include <sys/types.h>
-int main (int argc, char \*argv[]) {
+int main (int argc, char *argv[]) {
 	printf("PID: %d, user-ID: real %d, effective %d\n", getpid(), getuid(), geteuid());
 	return 0; 
 }
@@ -159,7 +159,7 @@ char *getenv(const char *name);
 
 #### setenv
 
-Setenv aggiunge name=value all'ambiente, a meno che non esista già una variabile identificata da name e overwrite abbia il valore 0. Se overwrite è diverso da zero, l'ambiente viene sempre cambiato. Ritorna 0 se ha successo, oppure -1 errore.
+Setenv aggiunge `name=value` all'ambiente, a meno che non esista già una variabile identificata da `name` e `overwrite` abbia il valore 0. Se `overwrite` è diverso da zero, l'ambiente viene sempre cambiato. Ritorna 0 se ha successo, oppure -1 in caso di errore.
 
 {{<highlight c>}}
 #include <stdlib.h>
@@ -168,7 +168,7 @@ int setenv(const char *name, const char *value, int overwrite);
 
 #### unsetenv
 
-unsetenv rimuove la variabile identificata dal nome dall'ambiente.
+unsetenv rimuove la variabile dall'ambiente identificata dal nome.
 
 {{<highlight c>}}
 #include <stdlib.h>
@@ -181,7 +181,7 @@ Un processo può recuperare la sua directory di lavoro corrente usando `getcwd`.
 
 ### getcwd
 
-Quando l'invocazione ha successo, getcwd restituisce un puntatore a cwdbuf come risultato della sua funzione. Se il percorso della directory di lavoro corrente supera i byte di dimensione, allora getcwd restituisce NULL.
+Quando l'invocazione ha successo, getcwd restituisce un puntatore a `cwdbuf` come risultato della sua funzione. Se il percorso della directory di lavoro corrente supera i byte di dimensione, allora getcwd restituisce NULL.
 
 {{<highlight c>}}
 #include <unistd.h>
@@ -189,7 +189,7 @@ Quando l'invocazione ha successo, getcwd restituisce un puntatore a cwdbuf come 
 char *getcwd(char *cwdbuf, size_t size);
 {{</highlight>}}
 
-Il chiamante deve allocare il buffer cwdbuf in modo che abbia una lunghezza minima di byte di dimensione. (Normalmente, dimensioneremmo cwdbuf usando la costante PATH MAX).
+Il chiamante deve allocare il buffer cwdbuf in modo che abbia una lunghezza minima di byte di dimensione. (Normalmente, dimensioneremmo `cwdbuf` usando la costante `PATH_MAX`).
 
 ### chdir
 

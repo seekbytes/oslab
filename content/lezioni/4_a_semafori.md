@@ -32,7 +32,7 @@ Altri tipi di IPC includono:
 
 Ogni meccanismo IPC di System V ha una chiamata di sistema associata get (`msgget`, `semget`, o `shmget`), che è analoga alla chiamata di sistema open. Data una chiave intera (analoga ad un nome di file), la chiamata di sistema get può creare prima un nuovo IPC e poi restituire il suo identificatore unico, oppure restituire l'identificatore di un IPC esistente. Un identificatore IPC è analogo ad un descrittore di file. Viene usato in tutte le successive chiamate di sistema per riferirsi all'oggetto IPC.
 
-{{<summary title="Creare un semaforo">}}
+{{<summary title="Esempio: creare un semaforo">}}
 {{<highlight c>}}
 // PERM: rw-------
 id = semget(key, 10 ,IPC_CREAT | S_IRUSR | S_IWUSR);
@@ -47,17 +47,19 @@ Le chiavi IPC di SystemV sono valori interi rappresentati utilizzando il tipo di
 
 ### IPC_PRIVATE
 
-Quando si crea un nuovo oggetto IPC, la chiave può essere specificata come IPC_PRIVATE.
+Quando si crea un nuovo oggetto IPC, la chiave può essere specificata come `IPC_PRIVATE`.
 In questo modo, si delega il problema di trovare una chiave unica al kernel.
-Esempio di utilizzo di IPC_PRIVATE:
-```
+Esempio di utilizzo di `IPC_PRIVATE`:
+
+{{<highlight c>}}
 id = semget(IPC_PRIVATE, 10, S_IRUSR | S_IWUSR);
-```
-Questa tecnica è particolarmente utile in applicazioni multiprocesso dove il processo padre crea l'oggetto IPC prima di eseguire un fork(), con il risultato che il processo figlio eredita l'identificatore dell'oggetto IPC.
+{{</highlight>}}
+
+Questa tecnica è particolarmente utile in applicazioni multiprocesso dove il processo padre crea l'oggetto IPC prima di eseguire un `fork()`, con il risultato che il processo figlio eredita l'identificatore dell'oggetto IPC.
 
 ### Ftok
 
-La funzione ftok (file to key) converte un pathname e un proj id (cioè identificatore di progetto) in una chiave IPC.
+La funzione ftok (file to key) converte un `pathname` e un proj_id (cioè identificatore di progetto) in una chiave IPC.
 
 {{<highlight c>}}
 #include <sys/ipc.h>
@@ -65,7 +67,7 @@ La funzione ftok (file to key) converte un pathname e un proj id (cioè identifi
 key_t ftok(char *pathname, int proj_id);
 {{</highlight>}}
 
-Il percorso fornito deve riferirsi a un file esistente e accessibile. Gli ultimi 8 bit del proj_id sono effettivamente utilizzati, e devono essere un valore non nullo. Tipicamente, il `pathname` si riferisce ad uno dei file, o directory, creati dall'applicazione.
+Il percorso fornito deve riferirsi a un file esistente e accessibile. Gli ultimi 8 bit del `proj_id` sono effettivamente utilizzati, e devono essere un valore non nullo. Tipicamente, il `pathname` si riferisce ad uno dei file, o directory, creati dall'applicazione.
 
 {{<summary title="Esempio di utilizzo della funzione ftok">}}
 {{<highlight c>}}
@@ -83,7 +85,7 @@ Esempio: carattere 'a':
 
 ## Strutture dati
 
-Il kernel mantiene una struttura dati associata (msqid_ds, semid_ds, shmid_ds) per ogni istanza di un oggetto System V IPC. Oltre ai dati specifici al tipo di oggetto IPC, ogni struttura dati associata include la sottostruttura ipc_perm che contiene i permessi concessi.
+Il kernel mantiene una struttura dati associata (`msqid_ds`, `semid_ds`, `shmid_ds`) per ogni istanza di un oggetto System V IPC. Oltre ai dati specifici al tipo di oggetto IPC, ogni struttura dati associata include la sottostruttura ipc_perm che contiene i permessi concessi.
 
 {{<highlight c>}}
 struct ipc_perm {
@@ -99,12 +101,12 @@ struct ipc_perm {
 
 Alcune note:
 
-* I campi uid e gid specificano la proprietà dell'oggetto IPC.
-* I campi cuid e cgid contengono gli ID utente e gruppo del processo che ha creato l'oggetto.
-* Il campo mode contiene la maschera dei permessi per l'oggetto IPC, che sono inizializzati usando i 9 bit inferiori dei flag specificati nella chiamata di sistema get usata per creare l'oggetto.
+* I campi `uid` e `gid` specificano la proprietà dell'oggetto IPC.
+* I campi `cuid` e `cgid` contengono gli ID utente e gruppo del processo che ha creato l'oggetto.
+* Il campo `mode` contiene la maschera dei permessi per l'oggetto IPC, che sono inizializzati usando i 9 bit inferiori dei flag specificati nella chiamata di sistema get usata per creare l'oggetto.
 
 Alcune note importanti su `ipc_perm`:
-* I campi cuid e cgid sono immutabili.
+* I campi `cuid` e `cgid` sono immutabili.
 * Solo i permessi di lettura e scrittura sono significativi per gli oggetti IPC. Il permesso di esecuzione è privo di significato e viene ignorato.
 
 {{<summary title="Esempio tipico di semctl per cambiare il proprietario di un semaforo">}}
@@ -244,7 +246,7 @@ struct semid_ds {
 };
 {{</highlight>}}
 
-Solo i sottocampi uid, gid e mode della sottostruttura sem_perm possono essere aggiornati tramite IPC_SET.
+Solo i sottocampi `uid`, `gid` e `mode` della sottostruttura `sem_perm` possono essere aggiornati tramite `IPC_SET`.
 
 {{<summary title="Esempio riguardo il cambio di permessi di un insieme di semafori">}}
 {{<highlight c>}}
@@ -383,7 +385,7 @@ int semop(int semid, struct sembuf *sops, unsigned int nsops);
 {{</highlight>}}
 
 L'argomento `sops` è un puntatore a un array che contiene una sequenza ordinata
-di operazioni da eseguire atomicamente, e nsops (> 0) fornisce la dimensione di questo array. Gli elementi dell'array sops sono strutture della seguente forma:
+di operazioni da eseguire **atomicamente**, e `nsops` (> 0) fornisce la dimensione di questo array. Gli elementi dell'array `sops` sono strutture della seguente forma:
 
 {{<highlight c>}}
 struct sembuf {

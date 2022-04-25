@@ -201,7 +201,7 @@ La chiamata al sistema di allarme fa in modo che un segnale `SIGALRM` sia conseg
 unsigned int alarm(unsigned int seconds);
 {{</highlight>}}
 
-L'argomento seconds specifica il numero di secondi nel futuro in cui il timer deve scadere. In quel momento, un segnale SIGALRM viene consegnato al processo chiamante. L'impostazione di un timer con allarme sovrascrive qualsiasi timer precedentemente impostato.
+L'argomento seconds specifica il numero di secondi nel futuro in cui il timer deve scadere. In quel momento, un segnale `SIGALRM` viene consegnato al processo chiamante. L'impostazione di un timer con allarme sovrascrive qualsiasi timer precedentemente impostato.
 
 {{<summary title="Impostare un timer con la syscall alarm">}}
 {{<highlight c>}}
