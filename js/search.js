@@ -40,14 +40,11 @@ const filterPostsJSON = (query, element) => {
         `<li class="search-result-item">
             <a href="${item.url}">
                 ${item.title}
-                <span class="icon">
-                    <i class="fas fa-external-link-alt"></i>
-                </span>
             </a>
         </li>`
     ))
     element.style.display = 'block';
-    itemsWithElement.unshift(`<p class="is-size-7 px-2 py-2 has-text-dark">Premi 'ESC' per cancellare la ricerca.</p>`)
+    itemsWithElement.unshift(`<p>Premi 'ESC' per cancellare la ricerca.</p>`)
     element.innerHTML = itemsWithElement.join('');
 }
 /**
