@@ -42,8 +42,8 @@ La lista completa dei segnali disponibili in Linux può essere recuperata con il
 
 Nome | Numero | Può essere gestito? | Azione di default
 -- | -- | -- | --
-`SIGTERM` | 15 | Sì | termina un processo
-`SIGINT` | 2 | Sì | termina un processo
+`SIGTERM` | 15 | Sì | Termina un processo
+`SIGINT` | 2 | Sì | Termina un processo
 `SIGQUIT` | 3 | Sì | Dump di un processo e termina un processo
 `SIGKILL` | 9 | **no** | Termina un processo
 `SIGSTOP` | 17 | **no** | Ferma un processo
@@ -163,12 +163,12 @@ La system call kill manda un segnale ad un altro processo.
 int kill(pid_t pid, int sig);
 {{</highlight>}}
 
-L'argomento pid identifica uno o più processi a cui il segnale specificato da sig deve essere inviato.
+L'argomento `pid` identifica uno o più processi a cui il segnale specificato da `sig` deve essere inviato.
 
-* (pid > 0): il segnale viene inviato al processo con PID uguale a pid.
-* (pid = 0): il segnale viene inviato ad ogni processo nello stesso gruppo di processi del processo chiamante, incluso il processo chiamante stesso.
-* (pid < 0): il segnale viene inviato a tutti i processi nel gruppo di processi il cui ID è uguale al valore assoluto di pid.
-* (pid = -1): il segnale viene inviato ad ogni processo per il quale il processo chiamante ha il permesso di inviare un segnale, eccetto init e il processo
+* `pid > 0`: il segnale viene inviato al processo con PID uguale a pid.
+* `pid = 0`: il segnale viene inviato ad ogni processo nello stesso gruppo di processi del processo chiamante, incluso il processo chiamante stesso.
+* `pid < 0`: il segnale viene inviato a tutti i processi nel gruppo di processi il cui ID è uguale al valore assoluto di pid.
+* `pid = -1`: il segnale viene inviato ad ogni processo per il quale il processo chiamante ha il permesso di inviare un segnale, eccetto init e il processo
 stesso.
 
 {{<summary title="Inviare un segnale SIGKILL ad un processo figlio">}}
