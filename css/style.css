@@ -25,6 +25,11 @@ body{
 		padding-top: 30px!important;
 	}
 
+	.content img{
+		height: auto;
+		width: 100%;
+	}
+
 }
 
 @media screen and (min-width: 801px){
