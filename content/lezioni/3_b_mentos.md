@@ -28,7 +28,7 @@ struct task_struct {
 
 Process Identifier (PID) è un valore numerico che identifica un processo. Quando un nuovo processo viene creato. un nuovo PID viene generato sommando 1 all'ultimo PID assegnato.
 In Linux, il valore massimo per un PID è `32768`. Quando il valore massimo del PID è raggiunto, l'ultimo PID assegnato viene riportato a 0 prima di cercare un nuovo PID.
-La macro `RESERVED_PID` (di solito impostata a 300) è definita per riservare i PID ai processi di sistema e ai demoni, cioè ai processi che forniscono un servizio (ad esempio un server web). Tutti i processi dell'utente hanno PID maggiori di RESERVED PID.
+La macro `RESERVED_PID` (di solito impostata a 300) è definita per riservare i PID ai processi di sistema e ai demoni, cioè ai processi che forniscono un servizio (ad esempio un server web). Tutti i processi dell'utente hanno PID maggiori di `RESERVED_PID`.
 
 ### Stato di un processo
 
@@ -36,10 +36,10 @@ Lo stato del processo è un valore numerico che descrive lo stato attuale del
 processo. Un processo può essere in uno dei seguenti stati:
 * `TASK_RUNNING`: o il processo è attualmente in esecuzione, o ha tutte le risorse per essere eseguito tranne la CPU.
 * `TASK_INTERRUPTIBLE`: il processo è bloccato (sleep), in attesa di qualche condizione da eseguire. Quando questa condizione esiste, il kernel imposta lo stato del processo a `TASK_RUNNING`. Il processo inoltre si risveglia e diventa eseguibile se riceve un segnale (es, risorse rilasciate).
-* `TASK_UNINTERRUPTIBLE`: questo stato è identico a TASK INTERRUPTIBLE ma non dipende da un segnale specifico, deve aspettare senza interruzione per una specifica chiamata weak-up (ad esempio, task in attesa di dati trasferiti dal blocco dev al buffer).
+* `TASK_UNINTERRUPTIBLE`: questo stato è identico a `TASK_INTERRUPTIBLE` ma non dipende da un segnale specifico, deve aspettare senza interruzione per una specifica chiamata weak-up (ad esempio, task in attesa di dati trasferiti dal blocco dev al buffer).
 * `TASK_STOPPED`: l'esecuzione del processo si è fermata; il compito non è in esecuzione né è idoneo all'esecuzione.
-* `EXIT_ZOMBIE`: l'esecuzione del processo è terminata, ma il processo padre non ha ancora emesso una chiamata di sistema wait4(0) o waitpid() per restituire informazioni sul processo morto.
-* `EXIT_DIED`: Lo stato finale: il processo è stato rimosso dal sistema perché il processo padre ha appena emesso una chiamata di sistema wait4() o una chiamata di sistema waitpid() per esso.
+* `EXIT_ZOMBIE`: l'esecuzione del processo è terminata, ma il processo padre non ha ancora emesso una chiamata di sistema `wait(0)` o `waitpid()` per restituire informazioni sul processo morto.
+* `EXIT_DIED`: Lo stato finale: il processo è stato rimosso dal sistema perché il processo padre ha appena emesso una chiamata di sistema `wait()` o una chiamata di sistema `waitpid()` per esso.
 
 ### Relazioni tra processi
 
@@ -63,7 +63,7 @@ Campi della `task_struct` che descrivono le relazioni tra i processi:
 
 ### Time accounting
 
-La struttura sched_entity se di una task_struct riporta la priorità e i tempi di esecuzione di un processo.
+La struttura `sched_entity` se di una task_struct riporta la priorità e i tempi di esecuzione di un processo.
 
 {{<highlight c>}}
 struct task_struct {
@@ -206,7 +206,7 @@ struct task_struct * pick_next_task(struct runqueue *runqueue) {
 
 La programmazione round robin presuppone che tutti i processi siano ugualmente importanti. Questo generalmente non è vero. A volte vorremmo che i processi ad alta intensità di CPU (non interattivi) processi ad alta intensità di CPU (non interattivi) abbiano una priorità inferiore rispetto ai processi interattivi. Inoltre, diversi utenti possono avere uno stato diverso. I processi di un amministratore di sistema possono avere una priorità superiore a quelli di uno studente.
 
-Questi obiettivi hanno portato all'introduzione del Priority scheduling algorithm.
+Questi obiettivi hanno portato all'introduzione del Priority Scheduling Algorithm.
 
 #### Highest Priority First
 
@@ -260,7 +260,7 @@ del tempo di CPU disponibile.
 
 Dato l'array prio_to_weight possiamo aggiornare il tempo di esecuzione virtuale di un processo p, cioè la sua esecuzione complessiva ponderata utilizzando la formula:
 
-vruntime += delta exec * (NICE 0 LOAD / weight(p))
+`vruntime += delta_exec * (NICE_0 LOAD / weight(p))`
 
 dove:
 * `vruntime` è il tempo di esecuzione virtuale del processo;

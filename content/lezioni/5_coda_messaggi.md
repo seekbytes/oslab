@@ -11,7 +11,7 @@ syscall = ["shmget", "shmat", "shmdt", "shmctl", "msgget", "msgsnd", "msgrcv", "
 
 ### Concetti fondamentali
 
-Una memoria condivisa è un segmento di memoria fisica gestito dal Kernel, che permette a due o più processi di scambiarsi dati. Una volta collegata, anche più di una volta, la memoria condivisa fa parte dello spazio di indirizzamento virtuale del processo, e non è richiesto alcun intervento del kernel. I dati scritti in una memoria condivisa sono immediatamente disponibili a tutti gli altri processo che condividono lo stesso segmento. Tipicamente, qualche metodo di sincronizzazione è richiesto in modo che i processi non accedano simultaneamente accedere alla memoria condivisa (per esempio, utilizzare i semafori!).
+Una memoria condivisa è un segmento di memoria fisica gestito dal Kernel, che permette a due o più processi di scambiarsi dati. Una volta collegata, anche più di una volta, la memoria condivisa fa parte dello spazio di indirizzamento virtuale del processo, e non è richiesto alcun intervento del kernel. I dati scritti in una memoria condivisa sono immediatamente disponibili a tutti gli altri processo che condividono lo stesso segmento. Tipicamente, qualche metodo di sincronizzazione è richiesto in modo che i processi non accedano simultaneamente alla memoria condivisa (per esempio, utilizzare i semafori!).
 
 ### Creazione ed apertura (shmget)
 

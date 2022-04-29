@@ -232,7 +232,7 @@ unlink("myFile");
 
 ### Attributi
 
-Le successive tre system call (stat, lstat e fstat) ritornano informazioni riguardo un file (compresa una cartella – su Linix una cartella è un file).
+Le successive tre system call (stat, lstat e fstat) ritornano informazioni riguardo un file (compresa una cartella – su Linux una cartella è un file).
 
 {{<highlight c>}}
 #include <sys/stat.h>
