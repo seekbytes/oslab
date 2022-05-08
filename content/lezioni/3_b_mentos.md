@@ -172,7 +172,7 @@ Round Robin è un algoritmo di programmazione della CPU in cui una fetta di temp
 Input: Processo corrente `c`, lista di processi `L`
 Output: prossimo processo `n`
 
-{{<highlight pseudocode>}}
+{{<highlight ruby>}}
 nNode = next(c)
 if isHead(L, nNode) then
 	nNode = next(nNode)
@@ -220,7 +220,7 @@ Ogni processo ha una priorità statica. Più piccolo è il numero, più alta è 
 Input: Processo corrente c, lista di processi L
 Output: prossimo processo
 
-{{<highlight pseudocode>}}
+{{<highlight ruby>}}
 n = c
 for all lNode ∈ L do
 	if !isHead(L,lNode) then
@@ -274,7 +274,7 @@ Input: Processo corrente `c`, Elenco dei processi `L`
 
 Output: processo successivo `n`
 
-{{<highlight pseudocode>}}
+{{<highlight ruby>}}
 updateVirtualRuntime(c)
 n = c
 for all lNode ∈ L do

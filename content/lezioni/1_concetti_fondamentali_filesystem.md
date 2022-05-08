@@ -457,6 +457,7 @@ int rmdir(const char *pathname);
 Affinché rmdir abbia successo, la directory deve essere vuota. Se il componente finale di pathname è un collegamento simbolico, non viene dereferenziato; invece, risulta l'errore ENOTDIR.
 
 {{<summary title="Crea ed elimina una cartella">}}
+{{<highlight c>}}
 // Create a new directory with name myDir.
 int res = mkdir("myDir", S_IRUSR | S_IXUSR);
 if (res == 0) {
@@ -466,6 +467,7 @@ res = rmdir("myDir");
 if (res == 0)
     printf("The directory myDir was removed!\n");
 }
+{{</highlight>}}
 {{</summary>}}
 
 ### Opendir e closedir

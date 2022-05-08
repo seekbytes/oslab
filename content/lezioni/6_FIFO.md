@@ -188,7 +188,8 @@ Come le PIPE, anche le FIFO hanno un'estremità per leggere e per scrivere, i da
 La system call `mkfifo` crea una nuova FIFO.
 
 {{<highlight c>}}
-#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 // Returns 0 on success, or -1 on error
 int mkfifo(const char *pathname, mode_t mode);
@@ -201,7 +202,8 @@ Il parametro `pathname` specifica dove la FIFO è aperta. Come per un normale fi
 La system call open apre una FIFO.
 
 {{<highlight c>}}
-#include <unistd.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 // Returns file descriptor on success, or -1 on error.
 int open(const char *pathname, int flags);

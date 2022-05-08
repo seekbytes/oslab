@@ -1,6 +1,7 @@
 +++
 title = "Lezione 7.C - MentOS Deadlock"
 slug = "7-c-mentos-deadlock"
+description = "Spiegazione della gestione dell'algoritmo di prevenzione del deadlock su MentOS."
 date = 2022-04-26
 +++
 
@@ -55,7 +56,7 @@ Metodologie alternative:
 
 #### Richiesta di risorsa
 
-{{<highlight pseudocode>}}
+{{<highlight ruby>}}
 if req vec > need[req task] then
 	error()
 end if
@@ -74,7 +75,7 @@ end if
 
 #### Controllo stato safe
 
-{{<highlight pseudocode>}}
+{{<highlight ruby>}}
 work[m] = available; finish[n] = (0,...,0)
 while finish[] != (1,...,1) do
 	for i=0 to n do

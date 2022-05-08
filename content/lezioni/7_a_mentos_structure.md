@@ -1,6 +1,7 @@
 +++
 title = "Lezione 7.A - Struttura di MentOS"
 slug = "7-a-struttura-mentos"
+description = "Struttura delle cartelle e file progetto MentOS."
 date = 2022-04-26
 +++
 

@@ -1,6 +1,7 @@
 +++
 title = "Lezione 7.B - System Call MentOS"
 slug = "7-b-mentos-system-call"
+description = "Come implementare le system call su MentOS."
 date = 2022-04-26
 +++
 

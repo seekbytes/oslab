@@ -689,7 +689,7 @@ int execvp(const char *path, char *const argv[]);
 int execve(const char *path, char *const argv[], char *const envp[]);
 {{</highlight>}}
 
-Nota: la lista degli argomenti deve essere terminata da un puntatore NULL e, poiché queste sono funzioni variabili, questo puntatore deve essere cast (char *) NULL.
+Nota: la lista degli argomenti deve essere terminata da un puntatore `NULL` e, poiché queste sono funzioni variabili, questo puntatore deve essere cast `(char *) NULL`.
 
  Funzione | path | arg | environment envp
 -- | -- | -- | --
