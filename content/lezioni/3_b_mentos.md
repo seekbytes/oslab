@@ -84,16 +84,10 @@ int prio; // priority
 {{</highlight>}}
 
 **prio**:
-Definisce la priorità di esecuzione di un processo. Ha un valore nell'intervallo
-[100, 139], dove 100 significa la massima priorità e 139 significa la
-priorità più bassa.
-Per impostazione predefinita, la priorità di un nuovo processo generato è 120.
-Un processo può aumentare/diminuire il suo valore di prio usando la chiamata di sistema
-`nice(inc)`, che prende come parametro di input un valore nell'intervallo [-20, 19].
+Definisce la priorità di esecuzione di un processo. Ha un valore nell'intervallo [100, 139], dove 100 significa la massima priorità e 139 significa la priorità più bassa. Per impostazione predefinita, la priorità di un nuovo processo generato è 120. Un processo può aumentare/diminuire il suo valore di prio usando la chiamata di sistema `nice(inc)`, che prende come parametro di input un valore nell'intervallo [-20, 19].
 Esempi:
-* `nice(1)` (incrementa il valore di prio del processo chiamante di 1 unità) 120 ⇒ 121
-* `nice(-5)` (decrementa il valore di prio del processo chiamante di -5 unità) 120⇒
-115
+* `nice(1)` (incrementa il valore di prio del processo chiamante di 1 unità) 120 => 121
+* `nice(-5)` (decrementa il valore di prio del processo chiamante di -5 unità) 120 => 115
 
 Altri campi di questa struttura sono:
 

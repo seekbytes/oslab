@@ -384,8 +384,7 @@ La chiamata di sistema semop esegue una o più operazioni (wait (P) e signal (V)
 int semop(int semid, struct sembuf *sops, unsigned int nsops);
 {{</highlight>}}
 
-L'argomento `sops` è un puntatore a un array che contiene una sequenza ordinata
-di operazioni da eseguire **atomicamente**, e `nsops` (> 0) fornisce la dimensione di questo array. Gli elementi dell'array `sops` sono strutture della seguente forma:
+L'argomento `sops` è un puntatore a un array che contiene una sequenza ordinata di operazioni da eseguire **atomicamente**, e `nsops` (> 0) fornisce la dimensione di questo array. Gli elementi dell'array `sops` sono strutture della seguente forma:
 
 {{<highlight c>}}
 struct sembuf {
@@ -395,7 +394,7 @@ struct sembuf {
 };
 {{</highlight>}}
 
-Il campo sem num identifica il semaforo all'interno dell'insieme sul quale operazione deve essere eseguita. Il campo `sem_op` specifica l'operazione da essere eseguita:
+Il campo `sem_num` identifica il semaforo all'interno dell'insieme sul quale operazione deve essere eseguita. Il campo `sem_op` specifica l'operazione da essere eseguita:
 
 * `sem_op > 0`: il valore del sem op viene aggiunto al valore del sem num-th semaforo.
 * `sem_op = 0`: il valore del semaforo sem num-esimo viene controllato per vedere se è attualmente uguale a 0. Se non lo è, il processo chiamante è bloccato fino a quando il semaforo è 0.
@@ -404,11 +403,12 @@ Il campo sem num identifica il semaforo all'interno dell'insieme sul quale opera
 Quando una chiamata semop(...) si blocca, il processo rimane bloccato fino a quando seguenti eventi:
 * Un altro processo modifica il valore del semaforo in modo che l'operazione l'operazione richiesta possa procedere.
 * Un segnale interrompe la chiamata semop(...). In questo caso, l'errore EINTR risulta.
-* Un altro processo cancella il semaforo a cui fa riferimento semid. In questo caso, semop(...) fallisce con l'errore EIDRM.
+* Un altro processo cancella il semaforo a cui fa riferimento semid. In questo caso, semop(...) fallisce con l'errore `EIDRM`.
 
-Possiamo evitare che semop(...) si blocchi quando esegue un'operazione su un particolare semaforo specificando il flag IPC NOWAIT nel campo sem flg corrispondente. In questo caso, se semop(...) si sarebbe bloccato, invece fallisce con l'errore EAGAIN.
+Possiamo evitare che semop(...) si blocchi quando esegue un'operazione su un particolare semaforo specificando il flag `IPC_NOWAIT` nel campo sem_flg corrispondente. In questo caso, se semop(...) si sarebbe bloccato, invece fallisce con l'errore `EAGAIN`.
 
 {{<summary title="Esempio su come inizializzare un'array di operazioni sembuf">}}
+{{<highlight c>}}
 struct sembuf sops[3];
 sops[0].sem_num = 0;
 sops[0].sem_op = -1; // subtract 1 from semaphore 0
@@ -420,6 +420,7 @@ sops[2].sem_num = 2;
 sops[2].sem_op = 0; // wait for semaphore 2 to equal 0
 sops[2].sem_flg = IPC_NOWAIT; // but don’t block if operation cannot be
 performed immediately
+{{</highlight>}}
 {{</summary>}}
 
 {{<summary title="Esempio su come eseguire operazioni su un insieme di semafori">}}
