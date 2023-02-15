@@ -213,10 +213,10 @@ La chiamata di sistema msgsnd scrive un messaggio in una coda di messaggi.
 int msgsnd(int msqid, const void *msgp, size_t msgsz, int msgflg);
 {{</highlight>}}
 
-* l'argomento msqid è un identificatore di coda di messaggi
-* msgp è un indirizzo che punta a una struttura di messaggio
-* msgsz specifica il numero di byte contenuti nel campo mtext di del messaggio
-* l'argomento msgflg può essere 0, o il flag IPC NOWAIT.
+* l'argomento `msqid` è un identificatore di coda di messaggi
+* `msgp` è un indirizzo che punta a una struttura di messaggio
+* `msgsz` specifica il numero di byte contenuti nel campo mtext di del messaggio
+* l'argomento `msgflg` può essere 0, o la flag `IPC_NOWAIT`.
 	* Normalmente, se una coda di messaggi è piena, msgsnd si blocca fino a quando non diventa disponibile abbastanza spazio per permettere al messaggio di essere messo in coda. Se viene specificato `IPC_NOWAIT`, `msgsnd` ritorna immediatamente con l'errore `EAGAIN` (cioè, non ci sono dati disponibili in questo momento, riprova più tardi).
 
 {{<summary title="Esempio di invio messaggio">}}
